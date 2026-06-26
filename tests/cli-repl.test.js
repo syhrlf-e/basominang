@@ -44,7 +44,7 @@ test('perintah cls dan clear menggunakan ANSI escape untuk membersihkan layar', 
   const writes = []
   clearScreen({ write: (value) => writes.push(value) })
 
-  assert.deepEqual(writes, ['\x1b[2J\x1b[H'])
+  assert.deepEqual(writes, ['\x1b[3J\x1b[2J\x1b[H'])
 })
 
 test('buffer REPL menunggu blok, string, dan komentar hingga struktur lengkap', () => {
@@ -101,7 +101,7 @@ test('CLI help memuat panduan REPL dan contoh BasoMinang', () => {
 
   assert.equal(result.status, 0, result.stderr)
   assert.match(result.stdout, /REPL/)
-  assert.match(result.stdout, /Ketik cls atau clear untuk membersihkan layar\./)
+  assert.match(result.stdout, /Ketik cls atau clear untuk membersihkan layar dan riwayat terminal\./)
   assert.match(result.stdout, /Prompt \.\. berarti kode multi-baris belum selesai\./)
   assert.match(result.stdout, /bm run hello\.bm/)
   assert.match(result.stdout, /buek namo = 'Urang Minang'/)

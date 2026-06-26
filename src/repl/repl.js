@@ -13,7 +13,8 @@ function formatError(error) {
 }
 
 function clearScreen(output) {
-  output.write('\x1b[2J\x1b[H')
+  // CSI 3 J clears the terminal scrollback on Windows Terminal and modern conhost.
+  output.write('\x1b[3J\x1b[2J\x1b[H')
 }
 
 class ReplInputBuffer {
