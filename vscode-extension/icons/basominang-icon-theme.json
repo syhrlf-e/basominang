@@ -1,0 +1,11 @@
+{
+  "$schema": "vscode://schemas/icon-theme",
+  "iconDefinitions": {
+    "_file_bm": {
+      "iconPath": "./basominang.svg"
+    }
+  },
+  "fileExtensions": {
+    "bm": "_file_bm"
+  }
+}

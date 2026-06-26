@@ -2,7 +2,7 @@
   "name": "basominang",
   "displayName": "BasoMinang",
   "description": "Syntax highlighting untuk bahasa pemrograman BasoMinang (.bm)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "basominang",
   "engines": {
     "vscode": "^1.80.0"
@@ -28,6 +28,13 @@
         "language": "basominang",
         "scopeName": "source.basominang",
         "path": "./syntaxes/basominang.tmLanguage.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "basominang-file-icons",
+        "label": "BasoMinang File Icons",
+        "path": "./icons/basominang-icon-theme.json"
       }
     ]
   }

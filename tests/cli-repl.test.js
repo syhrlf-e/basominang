@@ -110,8 +110,12 @@ test('manifest VS Code extension valid dan menunjuk grammar yang ada', () => {
   const extensionDirectory = path.join(projectRoot, 'vscode-extension')
   const manifest = JSON.parse(fs.readFileSync(path.join(extensionDirectory, 'package.json'), 'utf8'))
   const grammarPath = manifest.contributes.grammars[0].path.replace('./', '')
+  const iconThemePath = manifest.contributes.iconThemes[0].path.replace('./', '')
+  const iconTheme = JSON.parse(fs.readFileSync(path.join(extensionDirectory, iconThemePath), 'utf8'))
 
   assert.equal(manifest.contributes.languages[0].extensions[0], '.bm')
   assert.equal(fs.existsSync(path.join(extensionDirectory, grammarPath)), true)
   assert.doesNotThrow(() => JSON.parse(fs.readFileSync(path.join(extensionDirectory, grammarPath), 'utf8')))
+  assert.equal(iconTheme.fileExtensions.bm, '_file_bm')
+  assert.equal(fs.existsSync(path.join(extensionDirectory, 'icons', 'basominang.svg')), true)
 })
