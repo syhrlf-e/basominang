@@ -28,6 +28,12 @@ CONTOH BASOMINANG
   buek namo = 'Urang Minang'
   cetak('Halo, ' + namo + '!')
 
+  buek namo = tanyo('Masuakkan namo: ')
+  cetak('Halo, ' + namo)
+
+CATATAN INPUT
+  tanyo(<prompt string>) menerima input teks saat menjalankan bm run.
+
 DOKUMENTASI
   https://github.com/syhrlf-e/basominang
 `

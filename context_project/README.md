@@ -39,6 +39,8 @@ buek hasil = faktorial(angko)
 cetak('Faktorial dari ' + angko + ' adolah ' + hasil)
 ```
 
+`tanyo(<prompt>)` tersedia sebagai built-in untuk input teks saat program dijalankan memakai `bm run`.
+
 ## Keyword yang Didukung
 
 | Keyword | Fungsi |

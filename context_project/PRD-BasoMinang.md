@@ -62,6 +62,7 @@ Compiler didistribusikan sebagai file `.exe` (Windows executable) sehingga dapat
 | Loop For | `untuak` |
 | Fungsi | `karajo` dengan parameter dan `baliakan` |
 | Print | `cetak` ke stdout terminal |
+| Input | `tanyo(<prompt>)` menerima teks dari terminal |
 | Komentar | `-{jan dibaco: ... }-` (single & multi-line) |
 | Scope | Block scope (variabel lokal dalam `{ }`) |
 | Break & Continue | `baranti`, `lanjuik` |
@@ -116,6 +117,7 @@ Compiler memiliki dua alias yang identik: `basominang` dan `bm`.
 | Variabel mutable | `buek` | `let` |
 | Variabel immutable | `tapek` | `const` |
 | Print ke terminal | `cetak` | `console.log` |
+| Input dari terminal | `tanyo(...)` | input teks |
 | Kondisi | `jiko` | `if` |
 | Kondisi lanjutan | `lain jiko` | `else if` |
 | Kondisi default | `lain` | `else` |
@@ -146,6 +148,7 @@ For          : untuak (<init>; <kondisi>; <update>) { }
 Fungsi       : karajo <nama>(<param>) { }
 Return       : baliakan <nilai>
 Print        : cetak(<nilai>)
+Input        : tanyo(<prompt string>)
 Komentar     : -{jan dibaco: <teks> }-
 ```
 
@@ -171,7 +174,16 @@ buek namo = 'Urang Minang'
 cetak('Halo, ' + namo + '!')
 ```
 
-### 7.2 Operasi Aritmatika
+### 7.2 Input dan Output
+
+`tanyo()` menerima input teks saat program dijalankan melalui `bm run`.
+
+```bm
+buek namo = tanyo('Masuakkan namo: ')
+cetak('Halo, ' + namo + '!')
+```
+
+### 7.3 Operasi Aritmatika
 
 ```bm
 buek a = 10

@@ -45,3 +45,18 @@ test('pipeline lengkap menghasilkan JavaScript untuk rekursi dan loop for', () =
   assert.match(code, /for \(let i = 1;/)
   assert.deepEqual(execute(code), [1, 2, 6])
 })
+
+test('pipeline meneruskan built-in tanyo dan menggunakan hasil string-nya', () => {
+  const { code } = compileSource("buek namo = tanyo('Namo: ') cetak('Halo, ' + namo)")
+  const output = []
+  const context = vm.createContext({
+    console: { log: (value) => output.push(value) },
+    tanyo: (prompt) => {
+      assert.equal(prompt, 'Namo: ')
+      return 'Syahrul'
+    }
+  })
+
+  vm.runInContext(code, context)
+  assert.deepEqual(output, ['Halo, Syahrul'])
+})

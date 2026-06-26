@@ -1,0 +1,2 @@
+buek namo = tanyo('Masuakkan namo: ')
+cetak('Halo, ' + namo + '!')

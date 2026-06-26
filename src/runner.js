@@ -1,12 +1,18 @@
 'use strict'
 
 const vm = require('node:vm')
+const readlineSync = require('readline-sync')
 
-function runJavaScript(code, { filename = 'program.bm.js', context = null } = {}) {
-  if (context) {
-    return vm.runInContext(code, context, { filename })
-  }
-  return vm.runInThisContext(code, { filename })
+function tanyo(prompt) {
+  return readlineSync.question(prompt)
 }
 
-module.exports = { runJavaScript }
+function runJavaScript(code, { filename = 'program.bm.js', context = null, input = tanyo } = {}) {
+  if (context) {
+    if (typeof context.tanyo !== 'function') context.tanyo = input
+    return vm.runInContext(code, context, { filename })
+  }
+  return vm.runInNewContext(code, { console, tanyo: input }, { filename })
+}
+
+module.exports = { runJavaScript, tanyo }

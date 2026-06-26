@@ -13,6 +13,13 @@ const ValueType = Object.freeze({
   FUNCTION: 'function'
 })
 
+const BUILTIN_FUNCTIONS = Object.freeze({
+  tanyo: Object.freeze({
+    params: ['prompt'],
+    returnType: ValueType.STRING
+  })
+})
+
 class ScopeChain {
   constructor() {
     this.scopes = [new Map()]
@@ -49,6 +56,21 @@ class SemanticAnalyzer {
     this.scope = new ScopeChain()
     this.functionDepth = 0
     this.loopDepth = 0
+    this.defineBuiltins()
+  }
+
+  defineBuiltins() {
+    for (const [name, builtin] of Object.entries(BUILTIN_FUNCTIONS)) {
+      this.scope.define(name, {
+        kind: 'function',
+        mutable: false,
+        type: ValueType.FUNCTION,
+        params: builtin.params,
+        returnType: builtin.returnType,
+        builtin: true,
+        line: null
+      })
+    }
   }
 
   analyze(ast) {
@@ -276,7 +298,14 @@ class SemanticAnalyzer {
     const symbol = this.scope.lookup(node.name)
     if (!symbol || symbol.kind !== 'function') this.raise('E04', node, node.name)
     if (node.args.length !== symbol.params.length) this.raise('E03', node, node.loc.line)
-    for (const argument of node.args) this.visit(argument)
+
+    const argumentTypes = node.args.map((argument) => this.visit(argument))
+    if (symbol.builtin && node.name === 'tanyo') {
+      this.assertString(argumentTypes[0], node.args[0])
+      this.annotate(node, symbol.returnType, { symbol: { ...symbol } })
+      return symbol.returnType
+    }
+
     this.annotate(node, ValueType.UNKNOWN, { symbol: { ...symbol } })
     return ValueType.UNKNOWN
   }
@@ -319,6 +348,10 @@ class SemanticAnalyzer {
     if (type !== ValueType.BOOLEAN && type !== ValueType.UNKNOWN) this.raise('E03', node, node.loc.line)
   }
 
+  assertString(type, node) {
+    if (type !== ValueType.STRING && type !== ValueType.UNKNOWN) this.raise('E03', node, node.loc.line)
+  }
+
   updateInferredType(symbol, type) {
     if ([ValueType.NULL, ValueType.UNDEFINED, ValueType.UNKNOWN].includes(symbol.type)) symbol.type = type
   }
@@ -346,4 +379,4 @@ function analyze(ast, source) {
   return new SemanticAnalyzer(source).analyze(ast)
 }
 
-module.exports = { analyze, ScopeChain, SemanticAnalyzer, ValueType }
+module.exports = { analyze, BUILTIN_FUNCTIONS, ScopeChain, SemanticAnalyzer, ValueType }

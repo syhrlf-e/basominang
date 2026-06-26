@@ -220,6 +220,7 @@ varDecl         ::= 'buek' IDENTIFIER '=' expression
 constDecl       ::= 'tapek' IDENTIFIER '=' expression
 
 printStmt       ::= 'cetak' '(' expression ')'
+inputExpr       ::= 'tanyo' '(' expression ')'
 
 ifStmt          ::= 'jiko' '(' expression ')' block
                     ( 'lain' 'jiko' '(' expression ')' block )*
@@ -661,6 +662,7 @@ Code Generator melakukan traversal Optimized AST dan menghasilkan kode JavaScrip
 | `VarDecl` | `let <name> = <value>;` |
 | `ConstDecl` | `const <name> = <value>;` |
 | `PrintStmt` | `console.log(<value>);` |
+| `CallExpr` (`tanyo`) | Runtime menerima input teks dari terminal |
 | `IfStmt` | `if (<cond>) { } else if { } else { }` |
 | `WhileStmt` | `while (<cond>) { }` |
 | `ForStmt` | `for (<init>; <cond>; <update>) { }` |

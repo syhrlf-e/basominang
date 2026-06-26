@@ -58,6 +58,16 @@ test('semantic analyzer memvalidasi pemanggilan fungsi dan jumlah argumennya', (
   expectError('karajo tambah(a, b) { baliakan a + b } cetak(tambah(1))', 'E03')
 })
 
+test('semantic analyzer mengenali tanyo sebagai built-in yang mengembalikan string', () => {
+  const ast = analyzeSource("buek namo = tanyo('Masuakkan namo: ') cetak(namo)")
+
+  assert.equal(ast.body[0].semantic.inferredType, 'string')
+  assert.equal(ast.body[0].value.semantic.inferredType, 'string')
+  expectError('tanyo()', 'E03')
+  expectError('tanyo(123)', 'E03')
+  expectError("karajo tanyo() { baliakan 'x' }", 'E11')
+})
+
 test('semantic analyzer memvalidasi konteks return, break, dan continue', () => {
   expectError('baliakan 1', 'E08')
   expectError('baranti', 'E09')

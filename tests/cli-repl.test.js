@@ -104,6 +104,7 @@ test('CLI help memuat panduan REPL dan contoh BasoMinang', () => {
   assert.match(result.stdout, /Prompt \.\. berarti kode multi-baris belum selesai\./)
   assert.match(result.stdout, /bm run hello\.bm/)
   assert.match(result.stdout, /cetak\('Halo, ' \+ namo \+ '!'\)/)
+  assert.match(result.stdout, /tanyo\(<prompt string>\) menerima input teks saat menjalankan bm run\./)
 })
 
 test('manifest VS Code extension valid dan menunjuk grammar yang ada', () => {
