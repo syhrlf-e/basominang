@@ -71,7 +71,10 @@ class Parser {
   }
 
   parsePrintStatement(keyword) {
-    return createNode('PrintStmt', { value: this.parseExpression() }, keyword)
+    this.consume(TokenType.LPAREN)
+    const value = this.parseExpression()
+    this.consume(TokenType.RPAREN)
+    return createNode('PrintStmt', { value }, keyword)
   }
 
   parseIfStatement(keyword) {

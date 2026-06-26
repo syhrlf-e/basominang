@@ -1,4 +1,4 @@
 -{jan dibaco: Program sapaan sederhana}-
 
 buek namo = 'Urang Minang'
-cetak 'Halo, ' + namo + '!'
+cetak('Halo, ' + namo + '!')

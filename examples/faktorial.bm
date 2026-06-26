@@ -6,4 +6,4 @@ karajo faktorial(n) {
 }
 
 buek hasil = faktorial(5)
-cetak 'Faktorial dari 5 adolah ' + hasil
+cetak('Faktorial dari 5 adolah ' + hasil)

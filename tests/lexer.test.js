@@ -7,7 +7,7 @@ const { tokenize } = require('../src/lexer/lexer')
 const { TokenType } = require('../src/lexer/token-types')
 
 test('lexer mengubah deklarasi dan print menjadi token beserta posisi', () => {
-  const tokens = tokenize("buek namo = 'Rull'\ncetak namo")
+  const tokens = tokenize("buek namo = 'Rull'\ncetak (namo)")
 
   assert.deepEqual(tokens, [
     { type: TokenType.BUEK, value: 'buek', line: 1, column: 1 },
@@ -15,8 +15,10 @@ test('lexer mengubah deklarasi dan print menjadi token beserta posisi', () => {
     { type: TokenType.ASSIGN, value: '=', line: 1, column: 11 },
     { type: TokenType.STRING, value: 'Rull', line: 1, column: 13 },
     { type: TokenType.CETAK, value: 'cetak', line: 2, column: 1 },
-    { type: TokenType.IDENTIFIER, value: 'namo', line: 2, column: 7 },
-    { type: TokenType.EOF, value: null, line: 2, column: 11 }
+    { type: TokenType.LPAREN, value: '(', line: 2, column: 7 },
+    { type: TokenType.IDENTIFIER, value: 'namo', line: 2, column: 8 },
+    { type: TokenType.RPAREN, value: ')', line: 2, column: 12 },
+    { type: TokenType.EOF, value: null, line: 2, column: 13 }
   ])
 })
 

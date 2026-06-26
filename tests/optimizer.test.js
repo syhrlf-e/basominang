@@ -31,8 +31,8 @@ test('optimizer mengganti referensi konstanta dengan literal dan melipat ekspres
 })
 
 test('optimizer menghapus cabang jiko yang pasti salah atau memilih cabang yang pasti benar', () => {
-  const removed = optimizeSource("jiko (salah) { cetak 'hapus' }")
-  const selected = optimizeSource("jiko (batua) { cetak 'pakai' } lain { cetak 'hapus' }")
+  const removed = optimizeSource("jiko (salah) { cetak('hapus') }")
+  const selected = optimizeSource("jiko (batua) { cetak('pakai') } lain { cetak('hapus') }")
 
   assert.equal(removed.body.length, 0)
   assert.equal(selected.body[0].type, 'Block')

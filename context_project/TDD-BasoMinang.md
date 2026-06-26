@@ -148,7 +148,7 @@ const KEYWORDS = {
 **Input:**
 ```bm
 buek namo = 'Rull'
-cetak namo
+cetak(namo)
 ```
 
 **Output Token Stream:**
@@ -219,7 +219,7 @@ statement       ::= varDecl
 varDecl         ::= 'buek' IDENTIFIER '=' expression
 constDecl       ::= 'tapek' IDENTIFIER '=' expression
 
-printStmt       ::= 'cetak' expression
+printStmt       ::= 'cetak' '(' expression ')'
 
 ifStmt          ::= 'jiko' '(' expression ')' block
                     ( 'lain' 'jiko' '(' expression ')' block )*
@@ -400,7 +400,7 @@ function parse(tokens):
 ```bm
 buek x = 10
 jiko (x > 5) {
-    cetak 'Labiah gadang'
+    cetak('Labiah gadang')
 }
 ```
 
@@ -598,7 +598,7 @@ Blok yang kondisinya pasti `salah` dihapus:
 
 ```bm
 jiko (salah) {
-    cetak 'ini indak akan jalan'   →   (dihapus)
+    cetak('ini indak akan jalan')   →   (dihapus)
 }
 ```
 
@@ -696,7 +696,7 @@ karajo faktorial(n) {
 }
 
 buek hasil = faktorial(5)
-cetak hasil
+cetak(hasil)
 ```
 
 **Output JavaScript:**

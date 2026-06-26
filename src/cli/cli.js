@@ -26,7 +26,7 @@ CONTOH
 
 CONTOH BASOMINANG
   buek namo = 'Urang Minang'
-  cetak 'Halo, ' + namo + '!'
+  cetak('Halo, ' + namo + '!')
 
 DOKUMENTASI
   https://github.com/syhrlf-e/basominang

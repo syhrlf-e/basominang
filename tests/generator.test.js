@@ -12,7 +12,7 @@ function execute(code) {
 }
 
 test('generator menghasilkan JavaScript valid dan mempertahankan precedence expression', () => {
-  const { code } = compileSource('buek hasil = (1 + 2) * 3 cetak hasil', { optimize: false })
+  const { code } = compileSource('buek hasil = (1 + 2) * 3 cetak(hasil)', { optimize: false })
 
   assert.match(code, /let hasil = \(\(1 \+ 2\) \* 3\);/)
   assert.deepEqual(execute(code), [9])
@@ -22,7 +22,7 @@ test('generator memetakan control flow, logical operator, dan string secara bena
   const source = [
     "buek namo = 'Rull'",
     'jiko (batua jo indak salah) {',
-    "  cetak 'Halo, ' + namo",
+    "  cetak('Halo, ' + namo)",
     '}'
   ].join('\n')
   const { code } = compileSource(source, { optimize: false })
@@ -37,7 +37,7 @@ test('pipeline lengkap menghasilkan JavaScript untuk rekursi dan loop for', () =
     '  jiko (n <= 1) { baliakan 1 }',
     '  baliakan n * faktorial(n - 1)',
     '}',
-    'untuak (i = 1; i <= 3; i++) { cetak faktorial(i) }'
+    'untuak (i = 1; i <= 3; i++) { cetak(faktorial(i)) }'
   ].join('\n')
   const { code } = compileSource(source)
 

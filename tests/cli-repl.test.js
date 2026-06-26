@@ -28,7 +28,7 @@ test('REPL mempertahankan state semantic dan runtime antar input', () => {
   session.context = vm.createContext({ console: { log: (value) => output.push(value) } })
 
   session.execute('buek namo = \'Rull\'')
-  session.execute("cetak 'Halo, ' + namo")
+  session.execute("cetak('Halo, ' + namo)")
 
   assert.deepEqual(output, ['Halo, Rull'])
 })
@@ -36,7 +36,7 @@ test('REPL mempertahankan state semantic dan runtime antar input', () => {
 test('REPL mengembalikan state bila input gagal dianalisis', () => {
   const session = createReplSession()
 
-  assert.throws(() => session.execute('buek gagal = 1 cetak indak_ado'), CompilerError)
+  assert.throws(() => session.execute('buek gagal = 1 cetak(indak_ado)'), CompilerError)
   assert.doesNotThrow(() => session.execute('buek gagal = 1'))
 })
 
@@ -58,9 +58,9 @@ test('buffer REPL menunggu blok, string, dan komentar hingga struktur lengkap', 
   assert.equal(buffer.isComplete(), true)
   assert.match(buffer.take(), /baliakan a \+ b/)
 
-  buffer.append("cetak 'Halo")
+  buffer.append("cetak('Halo")
   assert.equal(buffer.isComplete(), false)
-  buffer.append(" Minang'")
+  buffer.append(" Minang')")
   assert.equal(buffer.isComplete(), true)
   buffer.take()
 
@@ -77,7 +77,7 @@ test('REPL mengeksekusi fungsi yang dikirim sebagai input multi-baris', () => {
   const functionSource = ['karajo tambah(a, b) {', '  baliakan a + b', '}'].join('\n')
 
   session.execute(functionSource)
-  session.execute('cetak tambah(2, 3)')
+  session.execute('cetak(tambah(2, 3))')
 
   assert.deepEqual(output, [5])
 })
@@ -103,7 +103,7 @@ test('CLI help memuat panduan REPL dan contoh BasoMinang', () => {
   assert.match(result.stdout, /Ketik cls atau clear untuk membersihkan layar dan riwayat terminal\./)
   assert.match(result.stdout, /Prompt \.\. berarti kode multi-baris belum selesai\./)
   assert.match(result.stdout, /bm run hello\.bm/)
-  assert.match(result.stdout, /buek namo = 'Urang Minang'/)
+  assert.match(result.stdout, /cetak\('Halo, ' \+ namo \+ '!'\)/)
 })
 
 test('manifest VS Code extension valid dan menunjuk grammar yang ada', () => {

@@ -145,7 +145,7 @@ While        : salamo (<ekspresi>) { }
 For          : untuak (<init>; <kondisi>; <update>) { }
 Fungsi       : karajo <nama>(<param>) { }
 Return       : baliakan <nilai>
-Print        : cetak <nilai>
+Print        : cetak(<nilai>)
 Komentar     : -{jan dibaco: <teks> }-
 ```
 
@@ -168,7 +168,7 @@ Komentar     : -{jan dibaco: <teks> }-
 
 ```bm
 buek namo = 'Urang Minang'
-cetak 'Halo, ' + namo + '!'
+cetak('Halo, ' + namo + '!')
 ```
 
 ### 7.2 Operasi Aritmatika
@@ -177,11 +177,11 @@ cetak 'Halo, ' + namo + '!'
 buek a = 10
 buek b = 3
 
-cetak a + b
-cetak a - b
-cetak a * b
-cetak a / b
-cetak a % b
+cetak(a + b)
+cetak(a - b)
+cetak(a * b)
+cetak(a / b)
+cetak(a % b)
 ```
 
 ### 7.3 Kondisi
@@ -190,13 +190,13 @@ cetak a % b
 buek niai = 85
 
 jiko (niai >= 90) {
-    cetak 'Sangaik Lamak'
+    cetak('Sangaik Lamak')
 } lain jiko (niai >= 75) {
-    cetak 'Lamak'
+    cetak('Lamak')
 } lain jiko (niai >= 60) {
-    cetak 'Cukuik'
+    cetak('Cukuik')
 } lain {
-    cetak 'Indak Luluih'
+    cetak('Indak Luluih')
 }
 ```
 
@@ -206,7 +206,7 @@ jiko (niai >= 90) {
 buek i = 1
 
 salamo (i <= 5) {
-    cetak i
+    cetak(i)
     i++
 }
 ```
@@ -215,7 +215,7 @@ salamo (i <= 5) {
 
 ```bm
 untuak (i = 1; i < 6; i++) {
-    cetak 'Langkah ka-' + i
+    cetak('Langkah ka-' + i)
 }
 ```
 
@@ -227,11 +227,11 @@ karajo tambah(a, b) {
 }
 
 karajo salamaik(namo) {
-    cetak 'Assalamualaikum, ' + namo + '!'
+    cetak('Assalamualaikum, ' + namo + '!')
 }
 
 buek hasil = tambah(10, 5)
-cetak hasil
+cetak(hasil)
 
 salamaik('Rull')
 ```
@@ -248,7 +248,7 @@ karajo faktorial(n) {
 
 buek angko = 5
 buek hasil = faktorial(angko)
-cetak 'Faktorial dari ' + angko + ' adolah ' + hasil
+cetak('Faktorial dari ' + angko + ' adolah ' + hasil)
 ```
 
 ### 7.8 Break & Continue
@@ -264,7 +264,7 @@ salamo (i <= 10) {
         i++
         lanjuik
     }
-    cetak i
+    cetak(i)
     i++
 }
 ```
@@ -281,7 +281,7 @@ jo bisa multi line
 }-
 
 buek x = 10
-cetak x
+cetak(x)
 ```
 
 ### 7.10 Logika Boolean
@@ -291,11 +291,11 @@ buek a = batua
 buek b = salah
 
 jiko (a jo indak b) {
-    cetak 'Kondisi batua!'
+    cetak('Kondisi batua!')
 }
 
 jiko (a atau b) {
-    cetak 'Salah satu batua!'
+    cetak('Salah satu batua!')
 }
 ```
 

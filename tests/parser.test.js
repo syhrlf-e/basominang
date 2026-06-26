@@ -24,7 +24,7 @@ test('parser menghasilkan Parse Tree terpisah sebelum AST dibangun', () => {
 })
 
 test('parser membangun AST untuk deklarasi dan print', () => {
-  const ast = parseSource("buek namo = 'Rull'\ncetak namo")
+  const ast = parseSource("buek namo = 'Rull'\ncetak(namo)")
 
   assert.equal(ast.type, 'Program')
   assert.equal(ast.body[0].type, 'VarDecl')
@@ -50,11 +50,11 @@ test('parser menerapkan precedence dan associativity operator', () => {
 
 test('parser membangun kondisi if, lain jiko, dan lain', () => {
   const ast = parseSource(`jiko (nilai >= 90) {
-  cetak 'A'
+  cetak('A')
 } lain jiko (nilai >= 75) {
-  cetak 'B'
+  cetak('B')
 } lain {
-  cetak 'C'
+  cetak('C')
 }`)
   const statement = ast.body[0]
 
@@ -66,7 +66,7 @@ test('parser membangun kondisi if, lain jiko, dan lain', () => {
 
 test('parser membangun while, for, assignment, dan update', () => {
   const ast = parseSource(`salamo (i < 3) { i++ }
-untuak (i = 0; i < 3; i += 1) { cetak i }`)
+untuak (i = 0; i < 3; i += 1) { cetak(i) }`)
 
   assert.equal(ast.body[0].type, 'WhileStmt')
   assert.equal(ast.body[0].body.body[0].type, 'UpdateStmt')
@@ -90,7 +90,7 @@ buek hasil = tambah(2, 3)`)
 })
 
 test('parser menerima statement separator titik koma opsional', () => {
-  const ast = parseSource('buek a = 1; cetak a;')
+  const ast = parseSource('buek a = 1; cetak(a);')
 
   assert.equal(ast.body.length, 2)
 })
@@ -109,7 +109,7 @@ test('parser menggunakan kontrak E01 dan E05 untuk syntax yang relevan', () => {
       error.message === "ado salah di barih 1: 'buek' paralu nilai, jan kosong!"
   )
   assert.throws(
-    () => parseSource('jiko (batua) { cetak 1'),
+    () => parseSource('jiko (batua) { cetak(1)'),
     (error) => error instanceof CompilerError &&
       error.code === 'E05' &&
       error.message === "ado salah di barih 1: kuruang indak ditutuik, tambahan '}'!"
@@ -120,4 +120,9 @@ test('parser menggunakan kontrak E01 dan E05 untuk syntax yang relevan', () => {
       error.code === 'E05' &&
       error.message === "ado salah di barih 1: kuruang indak ditutuik, tambahan ')'!"
   )
+})
+
+test('parser mewajibkan ekspresi cetak berada di dalam tanda kurung', () => {
+  assert.throws(() => parseSource('cetak nilai'), CompilerError)
+  assert.doesNotThrow(() => parseSource('cetak(nilai)'))
 })

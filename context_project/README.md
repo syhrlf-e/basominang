@@ -36,7 +36,7 @@ karajo faktorial(n) {
 
 buek angko = 5
 buek hasil = faktorial(angko)
-cetak 'Faktorial dari ' + angko + ' adolah ' + hasil
+cetak('Faktorial dari ' + angko + ' adolah ' + hasil)
 ```
 
 ## Keyword yang Didukung
