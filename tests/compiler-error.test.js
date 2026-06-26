@@ -32,4 +32,8 @@ test('kamus pesan error menggunakan bahasa Minang yang telah ditetapkan', () => 
     getErrorMessage('E05', 4),
     "ado salah di barih 4: kuruang indak ditutuik, tambahan '}'!"
   )
+  assert.equal(
+    getErrorMessage('E14', '900aa'),
+    "nilai angko '900aa' indak sah, pareso baliak!"
+  )
 })

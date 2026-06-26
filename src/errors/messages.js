@@ -15,7 +15,8 @@ const ERROR_MESSAGES = Object.freeze({
   E10: (line) => `ado salah di barih ${line}: 'lanjuik' hanyo bisa di dalam perulangan!`,
   E11: (name) => `variabel '${name}' alah ado, ganti namo yo!`,
   E12: (name) => `file '${name}' indak ado, pareso pathnyo!`,
-  E13: (extension) => `file paralu ekstensi .bm, bukan '${extension}'!`
+  E13: (extension) => `file paralu ekstensi .bm, bukan '${extension}'!`,
+  E14: (value) => `nilai angko '${value}' indak sah, pareso baliak!`
 })
 
 function getErrorMessage(code, ...args) {

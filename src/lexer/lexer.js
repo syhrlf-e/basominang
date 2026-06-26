@@ -124,6 +124,18 @@ class Lexer {
       }
     }
 
+    if (this.isIdentifierStart(this.peek())) {
+      while (this.isIdentifierPart(this.peek())) this.advance()
+      const invalidNumber = this.source.slice(start, this.current)
+      throw new CompilerError({
+        code: 'E14',
+        message: getErrorMessage('E14', invalidNumber),
+        line,
+        column,
+        source: this.source
+      })
+    }
+
     const lexeme = this.source.slice(start, this.current)
     this.tokens.push(this.createToken(TokenType.NUMBER, Number(lexeme), line, column))
   }

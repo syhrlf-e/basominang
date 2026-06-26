@@ -1183,3 +1183,4 @@ vsce package
 | E11 | Variabel duplikat | `variabel '<nama>' alah ado, ganti namo yo!` |
 | E12 | File tidak ditemukan | `file '<nama>.bm' indak ado, pareso pathnyo!` |
 | E13 | Ekstensi file salah | `file paralu ekstensi .bm, bukan '<ext>'!` |
+| E14 | Literal angka tidak valid | `nilai angko '<nilai>' indak sah, pareso baliak!` |

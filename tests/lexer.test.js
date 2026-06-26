@@ -89,3 +89,13 @@ test('lexer melempar CompilerError untuk karakter atau literal yang tidak valid'
   assert.throws(() => tokenize("buek x = 'tak ditutup"), CompilerError)
   assert.throws(() => tokenize('-{jan dibaco: tak ditutup'), CompilerError)
 })
+
+test('lexer menolak angka yang langsung diikuti identifier', () => {
+  assert.throws(
+    () => tokenize('buek nilai = 900aa'),
+    (error) => error instanceof CompilerError &&
+      error.code === 'E14' &&
+      error.message === "nilai angko '900aa' indak sah, pareso baliak!" &&
+      error.line === 1 && error.column === 14
+  )
+})
