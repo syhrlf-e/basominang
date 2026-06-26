@@ -74,10 +74,10 @@ class Optimizer {
   }
 
   visitDeclaration(node) {
-    const value = this.visit(node.value)
+    const value = node.value ? this.visit(node.value) : null
     const optimized = { ...node, value }
 
-    if (node.type === 'ConstDecl' && this.isLiteral(value)) {
+    if (node.type === 'ConstDecl' && value && this.isLiteral(value)) {
       this.define(node.name, value)
     } else {
       this.define(node.name, NON_CONSTANT)

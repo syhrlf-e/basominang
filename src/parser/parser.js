@@ -58,10 +58,16 @@ class Parser {
 
   parseVariableDeclaration(mutable, keyword) {
     const name = this.consume(TokenType.IDENTIFIER)
-    this.consume(TokenType.ASSIGN)
-    if (!this.canStartExpression(this.peek())) {
-      throw this.error(this.peek(), 'E01', this.peek().line, keyword.value)
+    if (!this.match(TokenType.ASSIGN)) {
+      if (!mutable) throw this.error(this.peek(), 'E01', this.peek().line, keyword.value)
+      return createNode('VarDecl', {
+        name: name.value,
+        value: null,
+        mutable
+      }, keyword)
     }
+
+    if (!this.canStartExpression(this.peek())) throw this.error(this.peek(), 'E01', this.peek().line, keyword.value)
     const value = this.parseExpression()
 
     return createNode(mutable ? 'VarDecl' : 'ConstDecl', {

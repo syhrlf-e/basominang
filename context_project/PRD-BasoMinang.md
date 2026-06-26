@@ -138,7 +138,7 @@ Compiler memiliki dua alias yang identik: `basominang` dan `bm`.
 ### 6.2 Syntax Rules
 
 ```
-Variabel     : buek <nama> = <nilai>
+Variabel     : buek <nama> [= <nilai>]
 Konstanta    : tapek <nama> = <nilai>
 Kondisi      : jiko (<ekspresi>) { }
 Else if      : lain jiko (<ekspresi>) { }

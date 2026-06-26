@@ -90,4 +90,5 @@ test('semantic analyzer menangkap pembagian nol literal dan ketidaksesuaian tipe
 test('semantic analyzer mendukung konkatenasi string dan assignment dari nilai undefined', () => {
   assert.equal(analyzeSource("buek namo = 'Rull' cetak('Halo, ' + namo)").type, 'Program')
   assert.equal(analyzeSource('buek hasil = datantu hasil = 10 cetak(hasil)').type, 'Program')
+  assert.equal(analyzeSource("buek namo namo = 'Rull' cetak(namo)").body[0].semantic.inferredType, 'undefined')
 })

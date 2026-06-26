@@ -220,6 +220,7 @@ statement       ::= varDecl
 varDecl         ::= 'buek' IDENTIFIER '=' expression
 constDecl       ::= 'tapek' IDENTIFIER '=' expression
 
+varDecl         ::= 'buek' IDENTIFIER ('=' expression)?
 printStmt       ::= 'cetak' '(' expression ')'
 inputExpr       ::= 'tanyo' '(' expression ')'
 

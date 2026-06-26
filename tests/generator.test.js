@@ -67,3 +67,10 @@ test('generator menghasilkan template literal BasoMinang dengan interpolasi', ()
   assert.match(code, /\["Halo, ", \(namo\), "!"\]\.join\(''\)/)
   assert.deepEqual(execute(code), ['Halo, Rull!'])
 })
+
+test('generator mendukung deklarasi buek tanpa nilai awal', () => {
+  const { code } = compileSource("buek namo namo = 'Rull' cetak(namo)")
+
+  assert.match(code, /let namo;/)
+  assert.deepEqual(execute(code), ['Rull'])
+})

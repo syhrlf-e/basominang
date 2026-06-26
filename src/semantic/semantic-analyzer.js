@@ -158,7 +158,7 @@ class SemanticAnalyzer {
   }
 
   visitDeclaration(node) {
-    const valueType = this.visit(node.value)
+    const valueType = node.value ? this.visit(node.value) : ValueType.UNDEFINED
     const symbol = { kind: 'variable', mutable: node.mutable, type: valueType, line: node.loc.line }
     if (!this.scope.define(node.name, symbol)) this.raise('E11', node, node.name)
     this.annotate(node, valueType, { symbol: { ...symbol } })

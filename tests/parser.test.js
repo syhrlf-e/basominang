@@ -36,6 +36,15 @@ test('parser membangun AST untuk deklarasi dan print', () => {
   })
 })
 
+test('parser menerima buek tanpa initializer namun tapek tetap wajib bernilai', () => {
+  const ast = parseSource("buek namo namo = 'Rull' cetak(namo)")
+
+  assert.equal(ast.body[0].type, 'VarDecl')
+  assert.equal(ast.body[0].value, null)
+  assert.equal(ast.body[1].type, 'AssignStmt')
+  assert.throws(() => parseSource('tapek namo'), CompilerError)
+})
+
 test('parser menerapkan precedence dan associativity operator', () => {
   const ast = parseSource('buek hasil = 1 + 2 * 3 atau batua jo indak salah')
   const expression = ast.body[0].value

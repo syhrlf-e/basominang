@@ -24,7 +24,7 @@ class JavaScriptGenerator {
 
     switch (node.type) {
       case 'VarDecl':
-        return `${padding}let ${node.name} = ${this.generateExpression(node.value)};`
+        return `${padding}let ${node.name}${node.value ? ` = ${this.generateExpression(node.value)}` : ''};`
       case 'ConstDecl':
         return `${padding}const ${node.name} = ${this.generateExpression(node.value)};`
       case 'AssignStmt':
