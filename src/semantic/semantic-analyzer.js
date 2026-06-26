@@ -56,6 +56,22 @@ class SemanticAnalyzer {
     return ast
   }
 
+  createCheckpoint() {
+    return {
+      scopes: this.scope.scopes.map((scope) => new Map(
+        [...scope.entries()].map(([name, symbol]) => [name, { ...symbol }])
+      )),
+      functionDepth: this.functionDepth,
+      loopDepth: this.loopDepth
+    }
+  }
+
+  restore(checkpoint) {
+    this.scope.scopes = checkpoint.scopes
+    this.functionDepth = checkpoint.functionDepth
+    this.loopDepth = checkpoint.loopDepth
+  }
+
   visit(node) {
     switch (node.type) {
       case 'Program':

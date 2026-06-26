@@ -1,12 +1,33 @@
 # BasoMinang
 
 Compiler untuk bahasa pemrograman mini berbasis Bahasa Minangkabau. Source file
-memakai ekstensi `.bm` dan akan dikompilasi menjadi JavaScript.
+memakai ekstensi `.bm` dan dikompilasi menjadi JavaScript.
 
 ## Status Pengembangan
 
-Project sedang dikerjakan berurutan mengikuti TDD: fondasi → lexer → parser/AST
-→ semantic analysis → optimizer/generator → CLI, REPL, extension, dan packaging.
+Compiler pipeline, CLI, REPL, contoh program, dan extension VS Code telah tersedia.
+
+## Penggunaan
+
+```bash
+npm install
+npm start -- --help
+npm start -- run examples/hello.bm
+npm start -- compile examples/faktorial.bm
+```
+
+Menjalankan `npm start` tanpa argumen membuka REPL. Ketik `kalua` untuk keluar.
+
+## Build Distribusi
+
+```bash
+npm run build
+cd vscode-extension
+npx @vscode/vsce package
+```
+
+Executable akan berada di `dist/`, sedangkan extension berada di
+`vscode-extension/basominang-1.0.0.vsix`.
 
 ## Menjalankan Test
 

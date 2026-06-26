@@ -1,0 +1,9 @@
+karajo faktorial(n) {
+  jiko (n <= 1) {
+    baliakan 1
+  }
+  baliakan n * faktorial(n - 1)
+}
+
+buek hasil = faktorial(5)
+cetak 'Faktorial dari 5 adolah ' + hasil

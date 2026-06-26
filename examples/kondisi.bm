@@ -1,0 +1,11 @@
+buek nilai = 85
+
+jiko (nilai >= 90) {
+  cetak 'Sangaik Lamak'
+} lain jiko (nilai >= 75) {
+  cetak 'Lamak'
+} lain jiko (nilai >= 60) {
+  cetak 'Cukuik'
+} lain {
+  cetak 'Indak Luluih'
+}
