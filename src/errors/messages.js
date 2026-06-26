@@ -1,11 +1,13 @@
 'use strict'
 
 const ERROR_MESSAGES = Object.freeze({
-  E01: (line) => `ado salah di barih ${line}: syntax indak sah, pareso baliak!`,
+  E01: (line, keyword = null) => keyword
+    ? `ado salah di barih ${line}: '${keyword}' paralu nilai, jan kosong!`
+    : `ado salah di barih ${line}: syntax indak sah, pareso baliak!`,
   E02: (name) => `variabel '${name}' indak ado, buek dulu yo!`,
   E03: (line) => `ado salah di barih ${line}: tipe data indak samo, pareso baliak!`,
   E04: (name) => `karajo '${name}' indak ado, buek dulu yo!`,
-  E05: (line) => `ado salah di barih ${line}: kuruang indak ditutuik, tambahan '}'!`,
+  E05: (line, closing = '}') => `ado salah di barih ${line}: kuruang indak ditutuik, tambahan '${closing}'!`,
   E06: (line, name) => `ado salah di barih ${line}: '${name}' adalah tapek, indak bisa dirubah!`,
   E07: (line) => `ado salah di barih ${line}: indak bisa bagi jo nol!`,
   E08: (line) => `ado salah di barih ${line}: 'baliakan' hanyo bisa di dalam 'karajo'!`,

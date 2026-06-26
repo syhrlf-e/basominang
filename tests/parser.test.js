@@ -100,3 +100,24 @@ test('parser menolak syntax yang tidak sesuai grammar', () => {
   assert.throws(() => parseSource('jiko (batua) cetak 1'), CompilerError)
   assert.throws(() => parseSource('untuak (i = 0; i < 3; i) {}'), CompilerError)
 })
+
+test('parser menggunakan kontrak E01 dan E05 untuk syntax yang relevan', () => {
+  assert.throws(
+    () => parseSource('buek nilai ='),
+    (error) => error instanceof CompilerError &&
+      error.code === 'E01' &&
+      error.message === "ado salah di barih 1: 'buek' paralu nilai, jan kosong!"
+  )
+  assert.throws(
+    () => parseSource('jiko (batua) { cetak 1'),
+    (error) => error instanceof CompilerError &&
+      error.code === 'E05' &&
+      error.message === "ado salah di barih 1: kuruang indak ditutuik, tambahan '}'!"
+  )
+  assert.throws(
+    () => parseSource('jiko (batua'),
+    (error) => error instanceof CompilerError &&
+      error.code === 'E05' &&
+      error.message === "ado salah di barih 1: kuruang indak ditutuik, tambahan ')'!"
+  )
+})

@@ -24,4 +24,12 @@ test('kamus pesan error menggunakan bahasa Minang yang telah ditetapkan', () => 
     getErrorMessage('E02', 'hasil'),
     "variabel 'hasil' indak ado, buek dulu yo!"
   )
+  assert.equal(
+    getErrorMessage('E01', 3, 'buek'),
+    "ado salah di barih 3: 'buek' paralu nilai, jan kosong!"
+  )
+  assert.equal(
+    getErrorMessage('E05', 4),
+    "ado salah di barih 4: kuruang indak ditutuik, tambahan '}'!"
+  )
 })

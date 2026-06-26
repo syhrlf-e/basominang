@@ -58,6 +58,9 @@ class Parser {
   parseVariableDeclaration(mutable, keyword) {
     const name = this.consume(TokenType.IDENTIFIER)
     this.consume(TokenType.ASSIGN)
+    if (!this.canStartExpression(this.peek())) {
+      throw this.error(this.peek(), 'E01', this.peek().line, keyword.value)
+    }
     const value = this.parseExpression()
 
     return createNode(mutable ? 'VarDecl' : 'ConstDecl', {
@@ -329,6 +332,10 @@ class Parser {
 
   consume(type) {
     if (this.check(type)) return this.advance()
+    if (this.isAtEnd() && [TokenType.RBRACE, TokenType.RPAREN].includes(type)) {
+      const closing = type === TokenType.RBRACE ? '}' : ')'
+      throw this.error(this.peek(), 'E05', this.peek().line, closing)
+    }
     throw this.error(this.peek())
   }
 
@@ -358,10 +365,10 @@ class Parser {
     return this.tokens[this.current - 1]
   }
 
-  error(token) {
+  error(token, code = 'E01', ...messageArguments) {
     return new CompilerError({
-      code: 'E01',
-      message: getErrorMessage('E01', token.line),
+      code,
+      message: getErrorMessage(code, ...(messageArguments.length > 0 ? messageArguments : [token.line])),
       line: token.line,
       column: token.column,
       source: this.source
