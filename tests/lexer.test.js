@@ -77,6 +77,13 @@ test('lexer mendukung escape sequence pada string', () => {
   })
 })
 
+test('lexer mengenali template literal dan mempertahankan interpolasinya', () => {
+  const [template, eof] = tokenize('`Halo, ${namo}!`')
+
+  assert.deepEqual(template, { type: TokenType.TEMPLATE, value: 'Halo, ${namo}!', line: 1, column: 1 })
+  assert.equal(eof.type, TokenType.EOF)
+})
+
 test('lexer melempar CompilerError untuk karakter atau literal yang tidak valid', () => {
   assert.throws(() => tokenize('buek x = @'), CompilerError)
   assert.throws(() => tokenize("buek x = 'tak ditutup"), CompilerError)

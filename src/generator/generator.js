@@ -98,6 +98,10 @@ class JavaScriptGenerator {
         return String(node.value)
       case 'StringLiteral':
         return JSON.stringify(node.value)
+      case 'TemplateLiteral':
+        return `[${node.parts.map((part) => typeof part === 'string'
+          ? JSON.stringify(part)
+          : `(${this.generateExpression(part)})`).join(', ')}].join('')`
       case 'BooleanLiteral':
         return String(node.value)
       case 'NullLiteral':

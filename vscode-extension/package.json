@@ -2,7 +2,7 @@
   "name": "basominang",
   "displayName": "BasoMinang",
   "description": "Syntax highlighting untuk bahasa pemrograman BasoMinang (.bm)",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "basominang",
   "engines": {
     "vscode": "^1.80.0"

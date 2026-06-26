@@ -52,7 +52,7 @@ Compiler didistribusikan sebagai file `.exe` (Windows executable) sehingga dapat
 | Fitur | Deskripsi |
 |---|---|
 | Variabel | Deklarasi dengan `buek` (mutable) dan `tapek` (immutable) |
-| Tipe Data | Number (integer & float), String (single quote), Boolean, Null, Undefined |
+| Tipe Data | Number (integer & float), String (single quote), Template Literal (backtick), Boolean, Null, Undefined |
 | Operasi Aritmatika | `+`, `-`, `*`, `/`, `%` |
 | Operasi Perbandingan | `==`, `!=`, `>`, `<`, `>=`, `<=` |
 | Operasi Logika | `jo` (and), `atau` (or), `indak` (not) |
@@ -149,6 +149,7 @@ Fungsi       : karajo <nama>(<param>) { }
 Return       : baliakan <nilai>
 Print        : cetak(<nilai>)
 Input        : tanyo(<prompt string>)
+Template     : `teks ${<ekspresi>}`
 Komentar     : -{jan dibaco: <teks> }-
 ```
 
@@ -180,7 +181,7 @@ cetak('Halo, ' + namo + '!')
 
 ```bm
 buek namo = tanyo('Masuakkan namo: ')
-cetak('Halo, ' + namo + '!')
+cetak(`Halo, ${namo}!`)
 ```
 
 ### 7.3 Operasi Aritmatika

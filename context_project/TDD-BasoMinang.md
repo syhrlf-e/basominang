@@ -78,6 +78,7 @@ Lexer bertugas membaca source code `.bm` karakter per karakter dan menghasilkan 
 | `IDENTIFIER` | `namo`, `hasil`, `x` | `/[a-zA-Z_][a-zA-Z0-9_]*/` |
 | `NUMBER` | `10`, `3.14`, `0` | `/[0-9]+(\.[0-9]+)?/` |
 | `STRING` | `'Halo'` | `/\'[^\']*\'/` |
+| `TEMPLATE` | `` `Halo, ${namo}!` `` | Backtick dengan interpolasi `${...}` |
 | `BOOLEAN` | `batua`, `salah` | Keyword khusus |
 | `NULL` | `kosong` | Keyword khusus |
 | `UNDEFINED` | `datantu` | Keyword khusus |
@@ -390,6 +391,7 @@ function parse(tokens):
 // Literals
 { type: 'NumberLiteral',  value: number  }
 { type: 'StringLiteral',  value: string  }
+{ type: 'TemplateLiteral', parts: (string | Expression)[] }
 { type: 'BooleanLiteral', value: boolean }
 { type: 'NullLiteral' }
 { type: 'UndefinedLiteral' }

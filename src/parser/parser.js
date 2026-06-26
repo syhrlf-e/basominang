@@ -3,6 +3,7 @@
 const { createNode } = require('./parse-tree')
 const { CompilerError } = require('../errors/compiler-error')
 const { getErrorMessage } = require('../errors/messages')
+const { tokenize } = require('../lexer/lexer')
 const { TokenType } = require('../lexer/token-types')
 
 const ASSIGNMENT_OPERATORS = new Set([
@@ -275,6 +276,9 @@ class Parser {
     if (this.match(TokenType.STRING)) {
       return createNode('StringLiteral', { value: this.previous().value }, this.previous())
     }
+    if (this.match(TokenType.TEMPLATE)) {
+      return this.parseTemplateLiteral(this.previous())
+    }
     if (this.match(TokenType.BATUA, TokenType.SALAH)) {
       return createNode('BooleanLiteral', { value: this.previous().type === TokenType.BATUA }, this.previous())
     }
@@ -309,6 +313,76 @@ class Parser {
     throw this.error(this.peek())
   }
 
+  parseTemplateLiteral(token) {
+    const parts = []
+    let text = ''
+    let index = 0
+
+    while (index < token.value.length) {
+      if (token.value[index] === '\\') {
+        text += token.value.slice(index, index + 2)
+        index += 2
+        continue
+      }
+
+      if (token.value[index] !== '$' || token.value[index + 1] !== '{') {
+        text += token.value[index]
+        index += 1
+        continue
+      }
+
+      if (text) {
+        parts.push(this.decodeTemplateText(text))
+        text = ''
+      }
+
+      const interpolation = this.readTemplateInterpolation(token, index + 2)
+      parts.push(this.parseTemplateExpression(interpolation.source, token))
+      index = interpolation.end + 1
+    }
+
+    if (text) parts.push(this.decodeTemplateText(text))
+    return createNode('TemplateLiteral', { parts }, token)
+  }
+
+  readTemplateInterpolation(token, start) {
+    let depth = 1
+    let quote = null
+
+    for (let index = start; index < token.value.length; index += 1) {
+      const character = token.value[index]
+      if (quote) {
+        if (character === '\\') index += 1
+        else if (character === quote) quote = null
+        continue
+      }
+      if (character === "'") {
+        quote = character
+        continue
+      }
+      if (character === '{') depth += 1
+      if (character === '}') {
+        depth -= 1
+        if (depth === 0) return { source: token.value.slice(start, index), end: index }
+      }
+    }
+
+    throw this.error(token)
+  }
+
+  parseTemplateExpression(source, token) {
+    const expressionParser = new Parser(tokenize(source), this.source)
+    const expression = expressionParser.parseExpression()
+    if (!expressionParser.isAtEnd()) throw expressionParser.error(expressionParser.peek())
+    return expression
+  }
+
+  decodeTemplateText(text) {
+    return text.replace(/\\([ntr`\\$])/g, (_, character) => ({
+      n: '\n', t: '\t', r: '\r', '`': '`', '\\': '\\', $: '$'
+    }[character]))
+  }
+
   isAssignmentStart() {
     return ASSIGNMENT_OPERATORS.has(this.peekNext().type) ||
       this.peekNext().type === TokenType.INCREMENT ||
@@ -319,7 +393,7 @@ class Parser {
     return [
       TokenType.NUMBER, TokenType.STRING, TokenType.BATUA, TokenType.SALAH,
       TokenType.KOSONG, TokenType.DATANTU, TokenType.IDENTIFIER,
-      TokenType.LPAREN, TokenType.INDAK
+      TokenType.LPAREN, TokenType.INDAK, TokenType.TEMPLATE
     ].includes(token.type)
   }
 

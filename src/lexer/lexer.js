@@ -84,6 +84,11 @@ class Lexer {
       return
     }
 
+    if (character === '`') {
+      this.readTemplate()
+      return
+    }
+
     this.readOperatorOrPunctuation()
   }
 
@@ -158,6 +163,24 @@ class Lexer {
 
     this.advance()
     this.tokens.push(this.createToken(TokenType.STRING, value, line, column))
+  }
+
+  readTemplate() {
+    const line = this.line
+    const column = this.column
+    this.advance()
+    let value = ''
+
+    while (!this.isAtEnd() && this.peek() !== '`') {
+      const character = this.advance()
+      value += character
+      if (character === '\\' && !this.isAtEnd()) value += this.advance()
+    }
+
+    if (this.isAtEnd()) this.throwSyntaxError(line, column)
+
+    this.advance()
+    this.tokens.push(this.createToken(TokenType.TEMPLATE, value, line, column))
   }
 
   readEscapeSequence(line, column) {

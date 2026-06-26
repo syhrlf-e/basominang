@@ -5,6 +5,7 @@ const TokenType = Object.freeze({
   IDENTIFIER: 'IDENTIFIER',
   NUMBER: 'NUMBER',
   STRING: 'STRING',
+  TEMPLATE: 'TEMPLATE',
 
   BUEK: 'BUEK',
   TAPEK: 'TAPEK',

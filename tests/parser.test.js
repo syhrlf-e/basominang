@@ -126,3 +126,12 @@ test('parser mewajibkan ekspresi cetak berada di dalam tanda kurung', () => {
   assert.throws(() => parseSource('cetak nilai'), CompilerError)
   assert.doesNotThrow(() => parseSource('cetak(nilai)'))
 })
+
+test('parser membangun template literal dengan interpolasi expression', () => {
+  const ast = parseSource('buek namo = \'Rull\' cetak(`Halo, ${namo + \'!\'}`)')
+  const template = ast.body[1].value
+
+  assert.equal(template.type, 'TemplateLiteral')
+  assert.equal(template.parts[0], 'Halo, ')
+  assert.equal(template.parts[1].type, 'BinaryExpr')
+})

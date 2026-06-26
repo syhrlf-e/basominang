@@ -50,6 +50,7 @@ test('semantic analyzer memperbolehkan shadowing namun menolak deklarasi ganda s
 
 test('semantic analyzer menolak variabel tidak terdeklarasi dan perubahan konstanta', () => {
   expectError('cetak(namo)', 'E02')
+  expectError('cetak(`Halo, ${namo}!`)', 'E02')
   expectError('tapek pi = 3.14 pi = 3', 'E06')
 })
 

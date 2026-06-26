@@ -49,6 +49,8 @@ class Optimizer {
         return this.visitUnaryExpression(node)
       case 'CallExpr':
         return { ...node, args: node.args.map((argument) => this.visit(argument)) }
+      case 'TemplateLiteral':
+        return { ...node, parts: node.parts.map((part) => typeof part === 'string' ? part : this.visit(part)) }
       case 'Identifier':
         return this.resolveConstant(node)
       default:

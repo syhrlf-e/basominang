@@ -139,6 +139,7 @@ class SemanticAnalyzer {
       case 'Identifier': return this.lookupVariable(node).type
       case 'NumberLiteral': return ValueType.NUMBER
       case 'StringLiteral': return ValueType.STRING
+      case 'TemplateLiteral': return this.visitTemplateLiteral(node)
       case 'BooleanLiteral': return ValueType.BOOLEAN
       case 'NullLiteral': return ValueType.NULL
       case 'UndefinedLiteral': return ValueType.UNDEFINED
@@ -308,6 +309,13 @@ class SemanticAnalyzer {
 
     this.annotate(node, ValueType.UNKNOWN, { symbol: { ...symbol } })
     return ValueType.UNKNOWN
+  }
+
+  visitTemplateLiteral(node) {
+    for (const part of node.parts) {
+      if (typeof part !== 'string') this.visit(part)
+    }
+    return ValueType.STRING
   }
 
   lookupVariable(node) {

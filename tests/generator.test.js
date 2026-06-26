@@ -60,3 +60,10 @@ test('pipeline meneruskan built-in tanyo dan menggunakan hasil string-nya', () =
   vm.runInContext(code, context)
   assert.deepEqual(output, ['Halo, Syahrul'])
 })
+
+test('generator menghasilkan template literal BasoMinang dengan interpolasi', () => {
+  const { code } = compileSource('buek namo = \'Rull\' cetak(`Halo, ${namo}!`)')
+
+  assert.match(code, /\["Halo, ", \(namo\), "!"\]\.join\(''\)/)
+  assert.deepEqual(execute(code), ['Halo, Rull!'])
+})
