@@ -2,11 +2,15 @@
   "name": "basominang",
   "displayName": "BasoMinang",
   "description": "Syntax highlighting untuk bahasa pemrograman BasoMinang (.bm)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "basominang",
   "engines": {
     "vscode": "^1.80.0"
   },
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:basominang"
+  ],
   "categories": [
     "Programming Languages"
   ],
@@ -30,12 +34,10 @@
         "path": "./syntaxes/basominang.tmLanguage.json"
       }
     ],
-    "iconThemes": [
-      {
-        "id": "basominang-file-icons",
-        "label": "BasoMinang File Icons",
-        "path": "./icons/basominang-icon-theme.json"
+    "configurationDefaults": {
+      "material-icon-theme.languages.associations": {
+        "basominang": "javascript"
       }
-    ]
+    }
   }
 }
