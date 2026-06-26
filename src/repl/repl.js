@@ -12,6 +12,10 @@ function formatError(error) {
   return error instanceof CompilerError ? error.format() : error.message
 }
 
+function clearScreen(output) {
+  output.write('\x1b[2J\x1b[H')
+}
+
 class ReplInputBuffer {
   constructor() {
     this.lines = []
@@ -122,6 +126,11 @@ function startRepl({ input = process.stdin, output = process.stdout } = {}) {
       rl.close()
       return
     }
+    if (!buffer.hasContent && (command === 'cls' || command === 'clear')) {
+      clearScreen(output)
+      rl.prompt()
+      return
+    }
 
     buffer.append(rawInput)
     if (!buffer.isComplete()) {
@@ -143,4 +152,4 @@ function startRepl({ input = process.stdin, output = process.stdout } = {}) {
   return rl
 }
 
-module.exports = { createReplSession, formatError, ReplInputBuffer, startRepl }
+module.exports = { clearScreen, createReplSession, formatError, ReplInputBuffer, startRepl }

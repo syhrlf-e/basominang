@@ -16,6 +16,7 @@ const VERSION = '1.0.0'
 const HELP_TEXT = `
 REPL
   Ketik kalua untuk keluar.
+  Ketik cls atau clear untuk membersihkan layar.
   Prompt .. berarti kode multi-baris belum selesai.
 
 CONTOH
