@@ -13,6 +13,24 @@ const { runJavaScript } = require('../runner')
 
 const VERSION = '1.0.0'
 
+const HELP_TEXT = `
+REPL
+  Ketik kalua untuk keluar.
+  Prompt .. berarti kode multi-baris belum selesai.
+
+CONTOH
+  bm run hello.bm
+  bm compile faktorial.bm
+  bm
+
+CONTOH BASOMINANG
+  buek namo = 'Urang Minang'
+  cetak 'Halo, ' + namo + '!'
+
+DOKUMENTASI
+  https://github.com/syhrlf-e/basominang
+`
+
 function compileFile(filePath) {
   const extension = path.extname(filePath)
   if (extension.toLowerCase() !== '.bm') {
@@ -58,7 +76,9 @@ function createProgram() {
   program
     .name('bm')
     .description('BasoMinang Compiler — Bahasa Pemrograman Minangkabau')
+    .helpOption('-h, --help', 'Tampilkan panduan penggunaan BasoMinang')
     .version(VERSION)
+    .addHelpText('after', HELP_TEXT)
 
   program
     .command('run <file>')
@@ -102,4 +122,4 @@ function startCli(argv = process.argv) {
   return createProgram().parse(argv)
 }
 
-module.exports = { VERSION, compileFile, createProgram, formatError, startCli, writeCompiledFile }
+module.exports = { HELP_TEXT, VERSION, compileFile, createProgram, formatError, startCli, writeCompiledFile }

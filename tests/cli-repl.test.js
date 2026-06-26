@@ -86,6 +86,19 @@ test('CLI menjalankan contoh program secara end-to-end', () => {
   assert.match(result.stdout, /Faktorial dari 5 adolah 120/)
 })
 
+test('CLI help memuat panduan REPL dan contoh BasoMinang', () => {
+  const result = spawnSync(process.execPath, ['index.js', '--help'], {
+    cwd: projectRoot,
+    encoding: 'utf8'
+  })
+
+  assert.equal(result.status, 0, result.stderr)
+  assert.match(result.stdout, /REPL/)
+  assert.match(result.stdout, /Prompt \.\. berarti kode multi-baris belum selesai\./)
+  assert.match(result.stdout, /bm run hello\.bm/)
+  assert.match(result.stdout, /buek namo = 'Urang Minang'/)
+})
+
 test('manifest VS Code extension valid dan menunjuk grammar yang ada', () => {
   const extensionDirectory = path.join(projectRoot, 'vscode-extension')
   const manifest = JSON.parse(fs.readFileSync(path.join(extensionDirectory, 'package.json'), 'utf8'))
