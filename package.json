@@ -12,9 +12,10 @@
     "start": "node index.js",
     "test": "node --test",
     "test:watch": "node --test --watch",
-    "build": "npm run build:basominang && npm run build:bm",
+    "build": "npm run build:basominang && npm run build:bm && npm run icon:windows",
     "build:basominang": "pkg index.js --targets node18-win-x64 --output dist/basominang.exe",
     "build:bm": "pkg index.js --targets node18-win-x64 --output dist/bm.exe",
+    "icon:windows": "node scripts/apply-windows-icon.js",
     "installer": "powershell -ExecutionPolicy Bypass -File scripts/build-installer.ps1"
   },
   "bin": {
@@ -27,6 +28,7 @@
     "ora": "^5.4.1"
   },
   "devDependencies": {
+    "@shockpkg/resedit": "^2.0.2",
     "pkg": "^5.8.1"
   },
   "pkg": {
