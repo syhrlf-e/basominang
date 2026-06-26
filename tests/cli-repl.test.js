@@ -89,8 +89,7 @@ test('CLI menjalankan contoh program secara end-to-end', () => {
   })
 
   assert.equal(result.status, 0, result.stderr)
-  assert.match(result.stdout, /Kompilasi barasiah!/)
-  assert.match(result.stdout, /Faktorial dari 5 adolah 120/)
+  assert.equal(result.stdout.trim(), 'Faktorial dari 5 adolah 120')
 })
 
 test('CLI help memuat panduan REPL dan contoh BasoMinang', () => {

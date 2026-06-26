@@ -85,14 +85,11 @@ function createProgram() {
     .command('run <file>')
     .description('Compile jo jalankan file .bm')
     .action((file) => {
-      const spinner = createSpinner('Mangompilasi...')
       try {
         const { code } = compileFile(file)
-        if (spinner) spinner.succeed(chalk.green('Kompilasi barasiah!'))
-        else console.log(chalk.green('Kompilasi barasiah!'))
         runJavaScript(code, { filename: file })
       } catch (error) {
-        handleCommandError(error, spinner)
+        handleCommandError(error)
       }
     })
 
