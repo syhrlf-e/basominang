@@ -1,5 +1,9 @@
 # BasoMinang
 
+<p align="center">
+  <img src="assets/branding/basominang.png" alt="Icon BasoMinang" width="180">
+</p>
+
 **BasoMinang** adalah bahasa pemrograman mini bernuansa Minangkabau yang dikompilasi menjadi JavaScript. Proyek ini dibuat untuk memperlihatkan alur compiler lengkap: lexer, parser, AST, semantic analysis, optimizer, code generator, CLI, REPL, dan integrasi VS Code.
 
 ## Fitur
