@@ -8,7 +8,7 @@ const { spawnSync } = require('node:child_process')
 const vm = require('node:vm')
 const { compileFile } = require('../src/cli/cli')
 const { CompilerError } = require('../src/errors/compiler-error')
-const { createReplSession } = require('../src/repl/repl')
+const { createReplSession, ReplInputBuffer } = require('../src/repl/repl')
 
 const projectRoot = path.resolve(__dirname, '..')
 
@@ -38,6 +38,41 @@ test('REPL mengembalikan state bila input gagal dianalisis', () => {
 
   assert.throws(() => session.execute('buek gagal = 1 cetak indak_ado'), CompilerError)
   assert.doesNotThrow(() => session.execute('buek gagal = 1'))
+})
+
+test('buffer REPL menunggu blok, string, dan komentar hingga struktur lengkap', () => {
+  const buffer = new ReplInputBuffer()
+
+  buffer.append('karajo tambah(a, b) {')
+  assert.equal(buffer.isComplete(), false)
+  buffer.append('  baliakan a + b')
+  assert.equal(buffer.isComplete(), false)
+  buffer.append('}')
+  assert.equal(buffer.isComplete(), true)
+  assert.match(buffer.take(), /baliakan a \+ b/)
+
+  buffer.append("cetak 'Halo")
+  assert.equal(buffer.isComplete(), false)
+  buffer.append(" Minang'")
+  assert.equal(buffer.isComplete(), true)
+  buffer.take()
+
+  buffer.append('-{jan dibaco:')
+  assert.equal(buffer.isComplete(), false)
+  buffer.append('}-')
+  assert.equal(buffer.isComplete(), true)
+})
+
+test('REPL mengeksekusi fungsi yang dikirim sebagai input multi-baris', () => {
+  const output = []
+  const session = createReplSession()
+  session.context = vm.createContext({ console: { log: (value) => output.push(value) } })
+  const functionSource = ['karajo tambah(a, b) {', '  baliakan a + b', '}'].join('\n')
+
+  session.execute(functionSource)
+  session.execute('cetak tambah(2, 3)')
+
+  assert.deepEqual(output, [5])
 })
 
 test('CLI menjalankan contoh program secara end-to-end', () => {
