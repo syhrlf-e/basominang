@@ -2,13 +2,14 @@
 
 const test = require('node:test')
 const assert = require('node:assert/strict')
+const { buildAst } = require('../src/ast/ast-builder')
 const { tokenize } = require('../src/lexer/lexer')
 const { optimize } = require('../src/optimizer/optimizer')
 const { parse } = require('../src/parser/parser')
 const { analyze } = require('../src/semantic/semantic-analyzer')
 
 function optimizeSource(source) {
-  const ast = parse(tokenize(source), source)
+  const ast = buildAst(parse(tokenize(source), source))
   analyze(ast, source)
   return optimize(ast)
 }

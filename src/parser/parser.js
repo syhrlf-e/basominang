@@ -1,6 +1,6 @@
 'use strict'
 
-const { createNode } = require('../ast/ast')
+const { createNode } = require('./parse-tree')
 const { CompilerError } = require('../errors/compiler-error')
 const { getErrorMessage } = require('../errors/messages')
 const { TokenType } = require('../lexer/token-types')
@@ -373,4 +373,4 @@ function parse(tokens, source) {
   return new Parser(tokens, source).parse()
 }
 
-module.exports = { Parser, parse }
+module.exports = { Parser, parse, parseTree: parse }

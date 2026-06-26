@@ -56,6 +56,20 @@ class SemanticAnalyzer {
     return ast
   }
 
+  visit(node) {
+    const inferredType = this.visitNode(node)
+    this.annotate(node, inferredType)
+    return inferredType
+  }
+
+  annotate(node, inferredType, details = {}) {
+    node.semantic = {
+      ...node.semantic,
+      ...details,
+      inferredType
+    }
+  }
+
   createCheckpoint() {
     return {
       scopes: this.scope.scopes.map((scope) => new Map(
@@ -72,7 +86,7 @@ class SemanticAnalyzer {
     this.loopDepth = checkpoint.loopDepth
   }
 
-  visit(node) {
+  visitNode(node) {
     switch (node.type) {
       case 'Program':
         for (const statement of node.body) this.visit(statement)
@@ -124,6 +138,7 @@ class SemanticAnalyzer {
     const valueType = this.visit(node.value)
     const symbol = { kind: 'variable', mutable: node.mutable, type: valueType, line: node.loc.line }
     if (!this.scope.define(node.name, symbol)) this.raise('E11', node, node.name)
+    this.annotate(node, valueType, { symbol: { ...symbol } })
     return valueType
   }
 
@@ -199,9 +214,11 @@ class SemanticAnalyzer {
   }
 
   visitFunctionDeclaration(node) {
-    if (!this.scope.define(node.name, {
+    const symbol = {
       kind: 'function', mutable: false, type: ValueType.FUNCTION, params: node.params, line: node.loc.line
-    })) this.raise('E11', node, node.name)
+    }
+    if (!this.scope.define(node.name, symbol)) this.raise('E11', node, node.name)
+    this.annotate(node, ValueType.FUNCTION, { symbol: { ...symbol } })
 
     const outerLoopDepth = this.loopDepth
     this.scope.enter()
@@ -260,12 +277,14 @@ class SemanticAnalyzer {
     if (!symbol || symbol.kind !== 'function') this.raise('E04', node, node.name)
     if (node.args.length !== symbol.params.length) this.raise('E03', node, node.loc.line)
     for (const argument of node.args) this.visit(argument)
+    this.annotate(node, ValueType.UNKNOWN, { symbol: { ...symbol } })
     return ValueType.UNKNOWN
   }
 
   lookupVariable(node) {
     const symbol = this.scope.lookup(node.name)
     if (!symbol || symbol.kind !== 'variable') this.raise('E02', node, node.name)
+    this.annotate(node, symbol.type, { symbol: { ...symbol } })
     return symbol
   }
 

@@ -3,12 +3,25 @@
 const test = require('node:test')
 const assert = require('node:assert/strict')
 const { CompilerError } = require('../src/errors/compiler-error')
+const { buildAst } = require('../src/ast/ast-builder')
 const { tokenize } = require('../src/lexer/lexer')
 const { parse } = require('../src/parser/parser')
 
 function parseSource(source) {
-  return parse(tokenize(source), source)
+  return buildAst(parse(tokenize(source), source))
 }
+
+test('parser menghasilkan Parse Tree terpisah sebelum AST dibangun', () => {
+  const source = 'buek hasil = 1 + 2'
+  const parseTree = parse(tokenize(source), source)
+  const ast = buildAst(parseTree)
+
+  assert.equal(parseTree.kind, 'Program')
+  assert.equal(parseTree.body[0].kind, 'VarDecl')
+  assert.equal(parseTree.body[0].value.kind, 'BinaryExpr')
+  assert.equal(ast.type, 'Program')
+  assert.equal(ast.body[0].type, 'VarDecl')
+})
 
 test('parser membangun AST untuk deklarasi dan print', () => {
   const ast = parseSource("buek namo = 'Rull'\ncetak namo")

@@ -3,12 +3,13 @@
 const test = require('node:test')
 const assert = require('node:assert/strict')
 const { CompilerError } = require('../src/errors/compiler-error')
+const { buildAst } = require('../src/ast/ast-builder')
 const { tokenize } = require('../src/lexer/lexer')
 const { parse } = require('../src/parser/parser')
 const { analyze } = require('../src/semantic/semantic-analyzer')
 
 function analyzeSource(source) {
-  return analyze(parse(tokenize(source), source), source)
+  return analyze(buildAst(parse(tokenize(source), source)), source)
 }
 
 function expectError(source, code) {
@@ -29,6 +30,17 @@ test('semantic analyzer menerima program valid dengan scope block dan fungsi rek
   ].join('\n')
 
   assert.equal(analyzeSource(source).type, 'Program')
+})
+
+test('semantic analyzer memberi metadata tipe dan simbol pada AST', () => {
+  const ast = analyzeSource('buek nilai = 10 cetak nilai')
+
+  assert.deepEqual(ast.body[0].semantic, {
+    symbol: { kind: 'variable', mutable: true, type: 'number', line: 1 },
+    inferredType: 'number'
+  })
+  assert.equal(ast.body[1].value.semantic.inferredType, 'number')
+  assert.equal(ast.body[1].value.semantic.symbol.kind, 'variable')
 })
 
 test('semantic analyzer memperbolehkan shadowing namun menolak deklarasi ganda satu scope', () => {
