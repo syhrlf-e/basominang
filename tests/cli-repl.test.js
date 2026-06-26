@@ -116,6 +116,8 @@ test('manifest VS Code extension valid dan menunjuk grammar yang ada', () => {
   assert.equal(fs.existsSync(path.join(extensionDirectory, grammarPath)), true)
   assert.doesNotThrow(() => JSON.parse(fs.readFileSync(path.join(extensionDirectory, grammarPath), 'utf8')))
   assert.equal(manifest.main, './extension.js')
+  assert.equal(manifest.icon, './assets/basominang.png')
+  assert.equal(fs.existsSync(path.join(extensionDirectory, manifest.icon.replace('./', ''))), true)
   assert.equal(manifest.contributes['configurationDefaults']['material-icon-theme.languages.associations'].basominang, 'javascript')
   assert.equal(fs.existsSync(path.join(extensionDirectory, 'extension.js')), true)
 })

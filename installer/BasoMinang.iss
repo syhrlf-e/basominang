@@ -20,6 +20,7 @@ OutputBaseFilename=BasoMinang-Setup-{#MyAppVersion}
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
+SetupIconFile=..\assets\branding\basominang.ico
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 UninstallDisplayName={#MyAppName}
@@ -27,10 +28,11 @@ UninstallDisplayName={#MyAppName}
 [Files]
 Source: "..\dist\bm.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "..\dist\basominang.exe"; DestDir: "{app}\bin"; Flags: ignoreversion
+Source: "..\assets\branding\basominang.ico"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{autoprograms}\BasoMinang REPL"; Filename: "{app}\bin\bm.exe"
-Name: "{autoprograms}\BasoMinang Help"; Filename: "{app}\bin\bm.exe"; Parameters: "--help"
+Name: "{autoprograms}\BasoMinang REPL"; Filename: "{app}\bin\bm.exe"; IconFilename: "{app}\basominang.ico"
+Name: "{autoprograms}\BasoMinang Help"; Filename: "{app}\bin\bm.exe"; Parameters: "--help"; IconFilename: "{app}\basominang.ico"
 
 [Code]
 const
