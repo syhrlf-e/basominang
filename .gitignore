@@ -1,5 +1,6 @@
 node_modules/
 dist/
+installer-output/
 coverage/
 *.vsix
 *.exe

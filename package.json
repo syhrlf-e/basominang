@@ -14,7 +14,8 @@
     "test:watch": "node --test --watch",
     "build": "npm run build:basominang && npm run build:bm",
     "build:basominang": "pkg index.js --targets node18-win-x64 --output dist/basominang.exe",
-    "build:bm": "pkg index.js --targets node18-win-x64 --output dist/bm.exe"
+    "build:bm": "pkg index.js --targets node18-win-x64 --output dist/bm.exe",
+    "installer": "powershell -ExecutionPolicy Bypass -File scripts/build-installer.ps1"
   },
   "bin": {
     "basominang": "index.js",
