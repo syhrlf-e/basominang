@@ -1,0 +1,35 @@
+{
+  "name": "basominang",
+  "displayName": "BasoMinang",
+  "description": "Syntax highlighting untuk bahasa pemrograman BasoMinang (.bm) — Bahasa Minangkabau",
+  "version": "1.0.0",
+  "publisher": "basominang",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/basominang/vscode-basominang"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "basominang",
+        "aliases": ["BasoMinang", "bm"],
+        "extensions": [".bm"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "basominang",
+        "scopeName": "source.bm",
+        "path": "./syntaxes/basominang.tmLanguage.json"
+      }
+    ]
+  }
+}
