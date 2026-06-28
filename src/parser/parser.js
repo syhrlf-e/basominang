@@ -296,6 +296,7 @@ class Parser {
     }
     if (this.match(TokenType.IDENTIFIER)) {
       const identifier = this.previous()
+      const name = this.parseCallableName(identifier)
 
       if (this.match(TokenType.LPAREN)) {
         const args = []
@@ -305,9 +306,10 @@ class Parser {
           } while (this.match(TokenType.COMMA))
         }
         this.consume(TokenType.RPAREN)
-        return createNode('CallExpr', { name: identifier.value, args }, identifier)
+        return createNode('CallExpr', { name, args }, identifier)
       }
 
+      if (name !== identifier.value) throw this.error(this.peek())
       return createNode('Identifier', { name: identifier.value }, identifier)
     }
     if (this.match(TokenType.LPAREN)) {
@@ -317,6 +319,13 @@ class Parser {
     }
 
     throw this.error(this.peek())
+  }
+
+  parseCallableName(identifier) {
+    if (!this.match(TokenType.DOT)) return identifier.value
+
+    const member = this.consume(TokenType.IDENTIFIER)
+    return `${identifier.value}.${member.value}`
   }
 
   parseTemplateLiteral(token) {

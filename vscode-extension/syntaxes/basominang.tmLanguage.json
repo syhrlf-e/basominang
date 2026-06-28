@@ -76,12 +76,13 @@
         { "name": "keyword.operator.comparison.basominang", "match": "(==|!=|<=|>=|<|>)" },
         { "name": "keyword.operator.assignment.basominang", "match": "(\\+=|-=|\\*=|/=|=)" },
         { "name": "keyword.operator.increment.basominang", "match": "(\\+\\+|--)" },
+        { "name": "keyword.operator.accessor.basominang", "match": "(\\.)" },
         { "name": "keyword.operator.arithmetic.basominang", "match": "([+\\-*/%])" }
       ]
     },
     "function_calls": {
       "name": "entity.name.function.basominang",
-      "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)(?=\\s*\\()"
+      "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)?)(?=\\s*\\()"
     },
     "identifiers": {
       "name": "variable.other.basominang",

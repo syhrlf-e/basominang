@@ -1,60 +1,99 @@
 # BasoMinang
 
 <p align="center">
-  <img src="assets/branding/basominang.png" alt="Icon BasoMinang" width="180">
+  <img src="assets/branding/basominang.png" alt="BasoMinang logo" width="180">
 </p>
 
-**BasoMinang** adalah bahasa pemrograman mini bernuansa Minangkabau yang dikompilasi menjadi JavaScript. Proyek ini dibuat untuk memperlihatkan alur compiler lengkap: lexer, parser, AST, semantic analysis, optimizer, code generator, CLI, REPL, dan integrasi VS Code.
+<p align="center">
+  <a href="https://github.com/syhrlf-e/basominang">
+    <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-2f80ed?style=for-the-badge">
+  </a>
+  <img alt="Node.js" src="https://img.shields.io/badge/node.js-%3E%3D18-339933?style=for-the-badge&logo=node.js&logoColor=white">
+  <img alt="Platform" src="https://img.shields.io/badge/platform-Windows-0078d4?style=for-the-badge&logo=windows&logoColor=white">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-passing-22c55e?style=for-the-badge">
+  <img alt="Language" src="https://img.shields.io/badge/language-BasoMinang-f59e0b?style=for-the-badge">
+</p>
 
-## Fitur
+**BasoMinang** adalah mini programming language bernuansa Minangkabau yang dikompilasi menjadi JavaScript. Project ini menyediakan compiler pipeline lengkap, command-line interface, mode interaktif, installer Windows, dan extension Visual Studio Code untuk file `.bm`.
 
-- File source berekstensi `.bm`
-- Variabel dan konstanta
-- Aritmatika, perbandingan, dan logika
-- Kondisi `jiko`, `lain jiko`, dan `lain`
-- Perulangan `salamo` dan `untuak`
-- Fungsi, rekursi, `baliakan`, `baranti`, dan `lanjuik`
-- Input terminal dengan `tanyo()` dan output dengan `cetak()`
-- Template literal dengan backtick dan `${...}`
-- REPL interaktif, installer Windows, serta syntax highlighting VS Code
+## Highlights
 
-## Instalasi Windows
+- Source file dengan ekstensi `.bm`
+- Compiler pipeline: lexer, parser, AST, semantic analyzer, optimizer, dan code generator
+- Variabel, konstanta, operator aritmatika, perbandingan, dan logika
+- Control flow: `jiko`, `lain jiko`, `lain`, `salamo`, dan `untuak`
+- Function, recursion, `baliakan`, `baranti`, dan `lanjuik`
+- Input/output terminal melalui `tanyo()`, `tanyo.nomor()`, dan `cetak()`
+- Template literal dengan backtick dan interpolasi `${...}`
+- Error message dengan nomor baris dan penunjuk lokasi
+- REPL, Windows installer, executable portable, dan VS Code syntax highlighting
 
-Gunakan file installer `BasoMinang-Setup-1.0.0.exe` dari folder `installer-output`.
+## Quick Start
 
-Setelah instalasi selesai, tutup dan buka kembali PowerShell atau Command Prompt. Perintah berikut akan tersedia secara global:
+Install BasoMinang menggunakan installer Windows dari halaman release:
+
+[Download release](https://github.com/syhrlf-e/basominang/releases)
+
+Setelah instalasi selesai, buka terminal baru lalu jalankan:
 
 ```powershell
-bm --help
 bm --version
+bm --help
 ```
 
-## Menjalankan Program
-
-Buat file, misalnya `halo.bm`:
+Buat file `hello.bm`:
 
 ```bm
-buek namo = 'Urang Minang'
-cetak(`Halo, ${namo}!`)
+buek pengguna = 'Minang'
+cetak(`Halo, ${pengguna}!`)
 ```
 
-Jalankan file tersebut:
+Jalankan program:
 
 ```powershell
-bm run halo.bm
+bm run hello.bm
 ```
 
-Untuk menghasilkan JavaScript tanpa langsung menjalankannya:
+Output:
+
+```text
+Halo, Minang!
+```
+
+## CLI
+
+```text
+Usage: bm [options] [command] [arguments]
+       bm run <file.bm>
+       bm compile <file.bm>
+       bm
+
+Options:
+  -h, --help, -help      tampilkan panduan penggunaan BasoMinang
+  -V, --version          tampilkan versi BasoMinang
+
+Commands:
+  run <file.bm>          compile dan jalankan file .bm
+  compile <file.bm>      compile file .bm menjadi file .js
+```
+
+### Run
 
 ```powershell
-bm compile halo.bm
+bm run program.bm
 ```
 
-> Gunakan `bm run` untuk program yang memakai `tanyo()`, karena input terminal disediakan oleh runtime BasoMinang.
+### Compile to JavaScript
 
-## REPL Interaktif
+```powershell
+bm compile program.bm
+```
 
-Jalankan `bm` tanpa argumen:
+Command tersebut akan menghasilkan file `program.js`.
+
+### REPL
+
+Jalankan `bm` tanpa command:
 
 ```powershell
 bm
@@ -63,141 +102,146 @@ bm
 Contoh sesi:
 
 ```text
->> buek namo = 'Rull'
->> cetak(`Halo, ${namo}!`)
-Halo, Rull!
+>> buek pesan = 'Halo dunia'
+>> cetak(pesan)
+Halo dunia
 ```
 
 Perintah khusus REPL:
 
-| Perintah | Fungsi |
+| Command | Description |
 |---|---|
 | `kalua` | Keluar dari REPL |
-| `cls` atau `clear` | Bersihkan layar dan riwayat terminal |
-| `..` | Prompt otomatis saat blok, string, atau komentar belum selesai |
+| `cls` / `clear` | Membersihkan layar dan riwayat terminal |
+| `..` | Prompt lanjutan saat blok, string, atau komentar belum selesai |
 
-## Syntax Dasar
+## Language Guide
 
-### Variabel dan Konstanta
+### Variables and Constants
 
-`buek` membuat variabel yang dapat diubah. Nilai awal boleh dikosongkan.
+`buek` digunakan untuk membuat variabel yang dapat diubah.
 
 ```bm
-buek namo
-namo = 'Rull'
+buek pesan = 'Halo'
+cetak(pesan)
 
-buek umur = 20
-umur += 1
-umur++
+pesan = 'Halo BasoMinang'
+cetak(pesan)
 ```
 
-`tapek` membuat konstanta dan wajib langsung diberi nilai.
+Variabel juga dapat dibuat tanpa nilai awal.
+
+```bm
+buek hasil
+hasil = 100
+cetak(hasil)
+```
+
+`tapek` digunakan untuk membuat konstanta.
 
 ```bm
 tapek pi = 3.14
+cetak(pi)
 ```
 
-Assignment yang tersedia:
+### Input and Output
 
-```bm
-nilai = 10
-nilai += 5
-nilai -= 2
-nilai *= 3
-nilai /= 2
-nilai++
-nilai--
-```
-
-### Nilai dan String
-
-| BasoMinang | Nilai JavaScript |
-|---|---|
-| `batua` | `true` |
-| `salah` | `false` |
-| `kosong` | `null` |
-| `datantu` | `undefined` |
-
-String biasa memakai single quote:
-
-```bm
-buek pesan = 'Salam dari Minangkabau'
-```
-
-Template literal memakai backtick. Ekspresi di dalam `${...}` akan dievaluasi oleh compiler.
-
-```bm
-buek namo = 'Rull'
-buek umur = 21
-cetak(`Halo, ${namo}! Umur ang ${umur} taun.`)
-```
-
-Escape sequence yang didukung: `\n`, `\t`, `\r`, `\\`, dan `\'`.
-
-```bm
-cetak('Baris partamo\nBaris kaduo')
-```
-
-### Input dan Output
-
-Gunakan `cetak(<nilai>)` untuk menampilkan nilai ke terminal.
+`cetak()` menampilkan output ke terminal.
 
 ```bm
 cetak('Halo dunia')
 cetak(10 + 5)
 ```
 
-Gunakan `tanyo(<prompt>)` untuk menerima input teks dari pengguna. Hasilnya selalu berupa string.
+`tanyo()` menerima input teks.
 
 ```bm
-buek namo = tanyo('Masuakkan namo: ')
-cetak(`Halo, ${namo}!`)
+buek nama = tanyo('Masukkan nama: ')
+cetak(`Halo, ${nama}!`)
 ```
 
-### Operator
-
-| Jenis | Operator |
-|---|---|
-| Aritmatika | `+`, `-`, `*`, `/`, `%` |
-| Perbandingan | `==`, `!=`, `>`, `<`, `>=`, `<=` |
-| Logika | `jo`, `atau`, `indak` |
-| Assignment | `=`, `+=`, `-=`, `*=`, `/=` |
-| Update | `++`, `--` |
-
-Contoh:
+`tanyo.nomor()` menerima input angka.
 
 ```bm
-jiko (nilai >= 75 jo indak salah) {
+buek nilai = tanyo.nomor('Masukkan nilai: ')
+
+jiko (nilai >= 75) {
   cetak('Lulus')
+} lain {
+  cetak('Belum lulus')
 }
 ```
 
-### Kondisi
+### Data Values
+
+| BasoMinang | JavaScript Target |
+|---|---|
+| `batua` | `true` |
+| `salah` | `false` |
+| `kosong` | `null` |
+| `datantu` | `undefined` |
+
+### Strings and Template Literals
+
+String biasa menggunakan single quote.
+
+```bm
+buek pesan = 'Salam dari BasoMinang'
+```
+
+Template literal menggunakan backtick dan mendukung interpolasi `${...}`.
+
+```bm
+buek nama = 'Pengguna'
+buek nilai = 90
+
+cetak(`Halo, ${nama}. Nilai kamu ${nilai}.`)
+```
+
+Escape sequence yang didukung: `\n`, `\t`, `\r`, `\\`, dan `\'`.
+
+```bm
+cetak('Baris pertama\nBaris kedua')
+```
+
+### Operators
+
+| Category | Operators |
+|---|---|
+| Arithmetic | `+`, `-`, `*`, `/`, `%` |
+| Comparison | `==`, `!=`, `>`, `<`, `>=`, `<=` |
+| Logic | `jo`, `atau`, `indak` |
+| Assignment | `=`, `+=`, `-=`, `*=`, `/=` |
+| Update | `++`, `--` |
+
+### Conditions
 
 ```bm
 buek nilai = 85
 
 jiko (nilai >= 90) {
   cetak('A')
-} lain jiko (nilai >= 75) {
+} lain jiko (nilai >= 80) {
   cetak('B')
 } lain {
   cetak('C')
 }
 ```
 
-### Perulangan `salamo`
+### Loops
+
+`salamo` digunakan untuk while loop.
 
 ```bm
 buek i = 1
 
 salamo (i <= 3) {
-  cetak(`Putaran ka-${i}`)
+  cetak(`Putaran ${i}`)
   i++
 }
 ```
 
-### Perulangan `untuak`
+`untuak` digunakan untuk for loop.
 
 ```bm
 untuak (i = 1; i <= 5; i++) {
@@ -205,21 +249,23 @@ untuak (i = 1; i <= 5; i++) {
     lanjuik
   }
 
-  jiko (i == 5) {
-    baranti
-  }
-
-  cetak(`Angko: ${i}`)
+  cetak(`Angka ${i}`)
 }
 ```
 
-### Fungsi dan Rekursi
+### Functions
 
 ```bm
 karajo tambah(a, b) {
   baliakan a + b
 }
 
+cetak(tambah(10, 5))
+```
+
+Recursion:
+
+```bm
 karajo faktorial(n) {
   jiko (n <= 1) {
     baliakan 1
@@ -228,41 +274,44 @@ karajo faktorial(n) {
   baliakan n * faktorial(n - 1)
 }
 
-cetak(`10 + 5 = ${tambah(10, 5)}`)
-cetak(`Faktorial 5 = ${faktorial(5)}`)
+cetak(faktorial(5))
 ```
 
-### Komentar
-
-Komentar memakai bentuk berikut dan dapat lebih dari satu baris:
+### Comments
 
 ```bm
--{jan dibaco: Ini komentar satu baris}-
+-{jan dibaco: komentar satu baris}-
 
 -{jan dibaco:
-Ini komentar
-multi-baris.
+komentar
+multi-baris
 }-
 ```
 
-## Contoh Program Lengkap
+## Complete Example
 
 ```bm
--{jan dibaco: Program sapaan dan perhitungan sederhana}-
+-{jan dibaco: Program penilaian sederhana}-
 
-buek namo = tanyo('Masuakkan namo: ')
-buek nilai = 80
+buek nama = tanyo('Masukkan nama: ')
+buek nilai = tanyo.nomor('Masukkan nilai: ')
 
-jiko (nilai >= 75) {
-  cetak(`Selamat, ${namo}! Ang lulus jo nilai ${nilai}.`)
+jiko (nilai >= 80) {
+  cetak(`Halo ${nama}, predikat kamu A.`)
+} lain jiko (nilai >= 70) {
+  cetak(`Halo ${nama}, predikat kamu B.`)
+} lain jiko (nilai >= 60) {
+  cetak(`Halo ${nama}, predikat kamu C.`)
 } lain {
-  cetak(`Jan putuih asa, ${namo}. Coba baliak yo.`)
+  cetak(`Halo ${nama}, predikat kamu D.`)
 }
+
+cetak(`Nilai akhir: ${nilai}`)
 ```
 
-## Pesan Error
+## Error Reporting
 
-Compiler menampilkan pesan error berbahasa Minang lengkap dengan nomor baris dan penunjuk lokasi.
+BasoMinang menampilkan error dengan pesan, nomor baris, dan penunjuk lokasi.
 
 ```text
 nilai angko '900aa' indak sah, pareso baliak!
@@ -271,44 +320,89 @@ nilai angko '900aa' indak sah, pareso baliak!
                  ^
 ```
 
-Beberapa error yang akan dideteksi:
+Error yang dideteksi antara lain:
 
-- Variabel atau fungsi belum dibuat
+- Variabel atau fungsi belum dideklarasikan
 - Deklarasi ganda dalam scope yang sama
-- Perubahan pada `tapek`
+- Assignment ke konstanta `tapek`
 - Ketidaksesuaian tipe dasar
 - Pembagian dengan nol literal
-- `baliakan` di luar `karajo`
-- `baranti` atau `lanjuik` di luar perulangan
+- `baliakan` di luar function
+- `baranti` atau `lanjuik` di luar loop
 - Kurung atau blok yang belum ditutup
-- Literal angka tidak valid, misalnya `900aa`
+- Literal angka tidak valid
 
 ## VS Code Extension
 
-Install file `basominang-1.0.5.vsix` dari folder `vscode-extension`:
+Extension BasoMinang menyediakan syntax highlighting untuk file `.bm`, termasuk keyword, operator, komentar, string, template literal, dan function call.
 
-1. Buka VS Code.
-2. Tekan `Ctrl+Shift+X`.
+Install dari file VSIX yang tersedia di halaman release:
+
+[Download VSIX](https://github.com/syhrlf-e/basominang/releases)
+
+Langkah instalasi:
+
+1. Buka Visual Studio Code.
+2. Buka tab Extensions.
 3. Klik menu `...`.
 4. Pilih **Install from VSIX...**.
 5. Pilih file `basominang-1.0.5.vsix`.
-6. Reload VS Code.
+6. Reload Visual Studio Code jika diperlukan.
 
-Extension menyediakan syntax highlighting untuk keyword, operator, komentar, string, template literal, serta file `.bm`.
+## Build from Source
 
-## Build dari Source
+Requirements:
 
-Prasyarat: Node.js 18+ dan Windows untuk menghasilkan executable/installer.
+- Node.js 18+
+- Windows untuk build executable dan installer
+- Inno Setup untuk membuat installer Windows
+
+Install dependencies:
 
 ```powershell
 npm install
+```
+
+Run tests:
+
+```powershell
 npm test
+```
+
+Build executable:
+
+```powershell
 npm run build
+```
+
+Build installer:
+
+```powershell
 npm run installer
 ```
 
-Perintah `npm run build` menghasilkan `dist\bm.exe` dan `dist\basominang.exe`. Perintah `npm run installer` menghasilkan installer di folder `installer-output`.
+Output build lokal:
 
-## Lisensi
+| Path | Description |
+|---|---|
+| `dist/bm.exe` | Executable utama |
+| `dist/basominang.exe` | Alias executable |
+| `installer-output/BasoMinang-Setup-1.0.0.exe` | Installer Windows |
+| `vscode-extension/basominang-1.0.5.vsix` | VS Code extension package |
 
-Dibuat oleh Syahrul Efendi untuk proyek Teknik Kompilasi.
+## Project Structure
+
+```text
+basominang/
+├─ assets/               branding assets
+├─ examples/             sample .bm programs
+├─ installer/            Inno Setup script
+├─ scripts/              build utilities
+├─ src/                  compiler, CLI, runner, and REPL source
+├─ tests/                automated tests
+└─ vscode-extension/     VS Code syntax highlighting extension
+```
+
+## Status
+
+BasoMinang is actively developed as a compact language/compiler project. The current release focuses on a stable core language, CLI workflow, Windows distribution, and editor integration.

@@ -48,6 +48,7 @@ const TokenType = Object.freeze({
   RPAREN: 'RPAREN',
   LBRACE: 'LBRACE',
   RBRACE: 'RBRACE',
+  DOT: 'DOT',
   COMMA: 'COMMA',
   SEMICOLON: 'SEMICOLON'
 })

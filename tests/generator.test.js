@@ -61,6 +61,31 @@ test('pipeline meneruskan built-in tanyo dan menggunakan hasil string-nya', () =
   assert.deepEqual(output, ['Halo, Syahrul'])
 })
 
+test('pipeline mengubah angka menjadi Number untuk input numerik', () => {
+  const source = [
+    "buek nilai = tanyo.nomor('Nilai: ')",
+    'jiko (nilai >= 80) {',
+    "  cetak('Nilai A')",
+    '} lain {',
+    "  cetak('Nilai B')",
+    '}',
+    'cetak(`Nilai Kamu : ${nilai}`)'
+  ].join('\n')
+  const { code } = compileSource(source)
+  const output = []
+  const context = vm.createContext({
+    console: { log: (value) => output.push(value) },
+    tanyo: (prompt) => {
+      assert.equal(prompt, 'Nilai: ')
+      return '85'
+    }
+  })
+
+  assert.match(code, /let nilai = Number\(tanyo\("Nilai: "\)\);/)
+  vm.runInContext(code, context)
+  assert.deepEqual(output, ['Nilai A', 'Nilai Kamu : 85'])
+})
+
 test('generator menghasilkan template literal BasoMinang dengan interpolasi', () => {
   const { code } = compileSource('buek namo = \'Rull\' cetak(`Halo, ${namo}!`)')
 

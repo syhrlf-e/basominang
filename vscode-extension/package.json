@@ -8,7 +8,7 @@
     "vscode": "^1.80.0"
   },
   "main": "./extension.js",
-  "icon": "./assets/basominang.png",
+  "icon": "assets/basominang.png",
   "activationEvents": [
     "onStartupFinished"
   ],

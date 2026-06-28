@@ -30,6 +30,7 @@ const SINGLE_CHARACTER_TOKENS = Object.freeze({
   ')': TokenType.RPAREN,
   '{': TokenType.LBRACE,
   '}': TokenType.RBRACE,
+  '.': TokenType.DOT,
   ',': TokenType.COMMA,
   ';': TokenType.SEMICOLON
 })

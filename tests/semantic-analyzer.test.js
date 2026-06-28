@@ -69,6 +69,15 @@ test('semantic analyzer mengenali tanyo sebagai built-in yang mengembalikan stri
   expectError("karajo tanyo() { baliakan 'x' }", 'E11')
 })
 
+test('semantic analyzer mendukung tanyo.nomor sebagai input number', () => {
+  const ast = analyzeSource("buek nilai = tanyo.nomor('Masuakkan nilai: ') jiko (nilai >= 80) { cetak('A') }")
+
+  assert.equal(ast.body[0].semantic.inferredType, 'number')
+  assert.equal(ast.body[0].value.semantic.inferredType, 'number')
+  expectError('tanyo.nomor()', 'E03')
+  expectError('tanyo.nomor(123)', 'E03')
+})
+
 test('semantic analyzer memvalidasi konteks return, break, dan continue', () => {
   expectError('baliakan 1', 'E08')
   expectError('baranti', 'E09')

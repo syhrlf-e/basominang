@@ -15,7 +15,7 @@ function optimizeSource(source) {
 }
 
 test('optimizer melakukan constant folding pada angka, string, dan boolean', () => {
-  const ast = optimizeSource("buek angka = 3 + 5 * 2 buek teks = 'Baso' + 'Minang' buek aktif = indak salah")
+  const ast = optimizeSource("buek hasil = 3 + 5 * 2 buek teks = 'Baso' + 'Minang' buek aktif = indak salah")
 
   assert.equal(ast.body[0].value.type, 'NumberLiteral')
   assert.equal(ast.body[0].value.value, 13)

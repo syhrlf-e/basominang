@@ -92,19 +92,33 @@ test('CLI menjalankan contoh program secara end-to-end', () => {
   assert.equal(result.stdout.trim(), 'Faktorial dari 5 adolah 120')
 })
 
-test('CLI help memuat panduan REPL dan contoh BasoMinang', () => {
+test('CLI help memuat panduan command bergaya reference', () => {
   const result = spawnSync(process.execPath, ['index.js', '--help'], {
     cwd: projectRoot,
     encoding: 'utf8'
   })
 
   assert.equal(result.status, 0, result.stderr)
-  assert.match(result.stdout, /REPL/)
-  assert.match(result.stdout, /Ketik cls atau clear untuk membersihkan layar dan riwayat terminal\./)
-  assert.match(result.stdout, /Prompt \.\. berarti kode multi-baris belum selesai\./)
-  assert.match(result.stdout, /bm run hello\.bm/)
-  assert.match(result.stdout, /cetak\('Halo, ' \+ namo \+ '!'\)/)
-  assert.match(result.stdout, /tanyo\(<prompt string>\) menerima input teks saat menjalankan bm run\./)
+  assert.match(result.stdout, /Usage: bm \[options\] \[command\] \[arguments\]/)
+  assert.match(result.stdout, /Options:/)
+  assert.match(result.stdout, /-h, --help, -help\s+tampilkan panduan penggunaan BasoMinang/)
+  assert.match(result.stdout, /Commands:/)
+  assert.match(result.stdout, /run <file\.bm>\s+compile dan jalankan file \.bm/)
+  assert.match(result.stdout, /Interactive Mode:/)
+  assert.match(result.stdout, /Syntax:/)
+  assert.match(result.stdout, /tanyo\.nomor\(<prompt>\)\s+input angka\/number/)
+  assert.match(result.stdout, /Examples:/)
+  assert.match(result.stdout, /Documentation:/)
+})
+
+test('CLI help menerima alias satu strip -help', () => {
+  const result = spawnSync(process.execPath, ['index.js', '-help'], {
+    cwd: projectRoot,
+    encoding: 'utf8'
+  })
+
+  assert.equal(result.status, 0, result.stderr)
+  assert.match(result.stdout, /Usage: bm/)
 })
 
 test('manifest VS Code extension valid dan menunjuk grammar yang ada', () => {
@@ -116,8 +130,8 @@ test('manifest VS Code extension valid dan menunjuk grammar yang ada', () => {
   assert.equal(fs.existsSync(path.join(extensionDirectory, grammarPath)), true)
   assert.doesNotThrow(() => JSON.parse(fs.readFileSync(path.join(extensionDirectory, grammarPath), 'utf8')))
   assert.equal(manifest.main, './extension.js')
-  assert.equal(manifest.icon, './assets/basominang.png')
-  assert.equal(fs.existsSync(path.join(extensionDirectory, manifest.icon.replace('./', ''))), true)
+  assert.equal(manifest.icon, 'assets/basominang.png')
+  assert.equal(fs.existsSync(path.join(extensionDirectory, manifest.icon)), true)
   assert.equal(manifest.contributes['configurationDefaults']['material-icon-theme.languages.associations'].basominang, 'javascript')
   assert.equal(fs.existsSync(path.join(extensionDirectory, 'extension.js')), true)
 })

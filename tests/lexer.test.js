@@ -55,6 +55,18 @@ test('lexer mendahulukan operator dua karakter dibanding operator satu karakter'
   )
 })
 
+test('lexer mengenali titik untuk built-in bertingkat', () => {
+  const tokens = tokenize("tanyo.nomor('Nilai: ')")
+
+  assert.deepEqual(
+    tokens.map(({ type }) => type),
+    [
+      TokenType.IDENTIFIER, TokenType.DOT, TokenType.IDENTIFIER,
+      TokenType.LPAREN, TokenType.STRING, TokenType.RPAREN, TokenType.EOF
+    ]
+  )
+})
+
 test('lexer melewati komentar multi-baris dan menjaga posisi token sesudahnya', () => {
   const tokens = tokenize('-{jan dibaco:\nini komentar\n}-\nbuek x = 3.14')
 

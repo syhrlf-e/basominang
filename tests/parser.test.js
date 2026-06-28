@@ -98,6 +98,15 @@ buek hasil = tambah(2, 3)`)
   assert.deepEqual(variableDeclaration.value.args.map((argument) => argument.value), [2, 3])
 })
 
+test('parser membangun function call bertingkat untuk built-in seperti tanyo.nomor', () => {
+  const ast = parseSource("buek nilai = tanyo.nomor('Nilai: ')")
+  const call = ast.body[0].value
+
+  assert.equal(call.type, 'CallExpr')
+  assert.equal(call.name, 'tanyo.nomor')
+  assert.equal(call.args[0].value, 'Nilai: ')
+})
+
 test('parser menerima statement separator titik koma opsional', () => {
   const ast = parseSource('buek a = 1; cetak(a);')
 

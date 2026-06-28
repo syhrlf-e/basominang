@@ -17,6 +17,10 @@ const BUILTIN_FUNCTIONS = Object.freeze({
   tanyo: Object.freeze({
     params: ['prompt'],
     returnType: ValueType.STRING
+  }),
+  'tanyo.nomor': Object.freeze({
+    params: ['prompt'],
+    returnType: ValueType.NUMBER
   })
 })
 
@@ -301,8 +305,8 @@ class SemanticAnalyzer {
     if (node.args.length !== symbol.params.length) this.raise('E03', node, node.loc.line)
 
     const argumentTypes = node.args.map((argument) => this.visit(argument))
-    if (symbol.builtin && node.name === 'tanyo') {
-      this.assertString(argumentTypes[0], node.args[0])
+    if (symbol.builtin) {
+      this.validateBuiltinCall(node, argumentTypes, symbol)
       this.annotate(node, symbol.returnType, { symbol: { ...symbol } })
       return symbol.returnType
     }
@@ -316,6 +320,19 @@ class SemanticAnalyzer {
       if (typeof part !== 'string') this.visit(part)
     }
     return ValueType.STRING
+  }
+
+  validateBuiltinCall(node, argumentTypes) {
+    if (node.name === 'tanyo') {
+      this.assertString(argumentTypes[0], node.args[0])
+      return
+    }
+
+    if (node.name === 'tanyo.nomor') {
+      this.assertString(argumentTypes[0], node.args[0])
+      return
+    }
+
   }
 
   lookupVariable(node) {

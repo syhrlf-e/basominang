@@ -91,6 +91,9 @@ class JavaScriptGenerator {
       case 'UnaryExpr':
         return `(${this.mapOperator(node.operator)}${this.generateExpression(node.value)})`
       case 'CallExpr':
+        if (node.name === 'tanyo.nomor') {
+          return `Number(tanyo(${node.args.map((argument) => this.generateExpression(argument)).join(', ')}))`
+        }
         return `${node.name}(${node.args.map((argument) => this.generateExpression(argument)).join(', ')})`
       case 'Identifier':
         return node.name
@@ -116,6 +119,7 @@ class JavaScriptGenerator {
   mapOperator(operator) {
     return OPERATOR_MAP[operator] ?? operator
   }
+
 }
 
 function generate(ast, options) {
